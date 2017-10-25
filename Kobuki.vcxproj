@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <EclCore>D:\git\ecl_core</EclCore>
-    <EclLite>D:\git\ecl_lite</EclLite>
-    <EclNav>D:\git\ecl_navigation</EclNav>
+    <EclCore>..\ecl_core</EclCore>
+    <EclLite>..\ecl_lite</EclLite>
+    <EclNav>..\ecl_navigation</EclNav>
     <Ros2>D:\git\ros2-onecore</Ros2>
-    <Sophus>D:\git\Sophus</Sophus>
-    <KobukiCore>D:\git\kobuki_core</KobukiCore>
+    <Sophus>..\Sophus</Sophus>
+    <KobukiCore>..\kobuki_core</KobukiCore>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">

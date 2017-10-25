@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <EclCore>D:\git\ecl_core</EclCore>
-    <EclCore>D:\git\ecl_core</EclCore>
-    <EclLite>D:\git\ecl_lite</EclLite>
-    <EclNav>D:\git\ecl_navigation</EclNav>
+    <EclCore>..\ecl_core</EclCore>
+    <EclCore>..\ecl_core</EclCore>
+    <EclLite>..\ecl_lite</EclLite>
+    <EclNav>..\ecl_navigation</EclNav>
     <Ros2>D:\git\ros2-onecore</Ros2>
-    <Sophus>D:\git\Sophus</Sophus>
-    <KobukiCore>D:\git\kobuki_core</KobukiCore>
+    <Sophus>..\Sophus</Sophus>
+    <KobukiCore>..\kobuki_core</KobukiCore>
+    <KobukiNode>..\turtlebot2-win10\turtlebot2_demo\turtlebot2_drivers\src</KobukiNode>
     <KobukiDriver>D:\git\ros2-onecore\Kobuki\x64</KobukiDriver>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
@@ -120,7 +121,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(Ros2)\src\ros2\turtlebot2_demo\turtlebot2_drivers\src\kobuki_node.cpp">
+    <ClCompile Include="$(KobukiNode)\kobuki_node.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="pch.cpp">
