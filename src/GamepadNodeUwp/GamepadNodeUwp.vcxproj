@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Ros2>D:\git\ros2-onecore</Ros2>
+    <TinyXml2>C:\ProgramData\chocolatey\lib\tinyxml2\lib</TinyXml2>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{098a4670-9974-4f08-b411-0574fbe8903d}</ProjectGuid>
+    <RootNamespace>GamepadNodeUwp</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  
+  <!-- COMMON -->
+  <PropertyGroup>
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <!-- DEBUG -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <!-- RELEASE -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+
+  <PropertyGroup Label="UserMacros" />
+
+  <PropertyGroup>
+    <PackageCertificateKeyFile>GamepadNodeUwp_TemporaryKey.pfx</PackageCertificateKeyFile>
+  </PropertyGroup>
+
+  <!-- COMMON -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(Ros2)\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(Ros2)\install\Lib\rcl_interfaces__rosidl_typesupport_c.lib;$(Ros2)\install\Lib\rcl_interfaces__rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\rcl_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\rcl_interfaces__rosidl_generator_c.lib;$(Ros2)\install\Lib\rcl_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2)\install\lib\fastcdr-1.0.lib;$(Ros2)\install\lib\fastrtps-1.5.lib;$(Ros2)\install\Lib\rcutils.lib;$(Ros2)\install\Lib\rmw.lib;$(Ros2)\install\Lib\rmw_fastrtps_cpp.lib;$(Ros2)\install\Lib\rcl.lib;$(Ros2)\install\Lib\rclcpp.lib;$(Ros2)\install\Lib\geometry_msgs__rosidl_typesupport_c.lib;$(Ros2)\install\Lib\geometry_msgs__rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\geometry_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\geometry_msgs__rosidl_generator_c.lib;$(Ros2)\install\Lib\geometry_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2)\install\Lib\builtin_interfaces__rosidl_typesupport_c.lib;$(Ros2)\install\Lib\builtin_interfaces__rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\builtin_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\builtin_interfaces__rosidl_generator_c.lib;$(Ros2)\install\Lib\builtin_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2)\install\Lib\std_msgs__rosidl_typesupport_c.lib;$(Ros2)\install\Lib\std_msgs__rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\std_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\std_msgs__rosidl_generator_c.lib;$(Ros2)\install\Lib\std_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2)\install\Lib\rosidl_typesupport_c.lib;$(Ros2)\install\Lib\rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\rosidl_generator_c.lib;$(Ros2)\install\Lib\rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\rosidl_typesupport_introspection_cpp.lib;$(Ros2)\install\Lib\sensor_msgs__rosidl_typesupport_c.lib;$(Ros2)\install\Lib\sensor_msgs__rosidl_typesupport_cpp.lib;$(Ros2)\install\Lib\sensor_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2)\install\Lib\sensor_msgs__rosidl_generator_c.lib;$(Ros2)\install\Lib\sensor_msgs__rosidl_typesupport_introspection_cpp.lib;iphlpapi.lib;Shlwapi.lib;kernel32.lib;user32.lib;C:\ProgramData\chocolatey\lib\tinyxml2\lib\tinyxml2d.lib;onecoreuap.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="App.xaml.h">
+        <DependentUpon>App.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="MainPage.xaml.h">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClInclude>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    
+    <None Include="GamepadNodeUwp_TemporaryKey.pfx" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-200.png" />
+    <Image Include="Assets\Square150x150Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
+    <None Include="$(Ros2)\install\bin\rcl_interfaces__rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcl_interfaces__rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcl_interfaces__rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcl_interfaces__rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcl_interfaces__rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\fastcdr-1.0.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\fastrtps-1.5.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcutils.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rmw.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rmw_fastrtps_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rcl.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rclcpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\geometry_msgs__rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\geometry_msgs__rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\geometry_msgs__rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\geometry_msgs__rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\geometry_msgs__rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\builtin_interfaces__rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\builtin_interfaces__rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\builtin_interfaces__rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\builtin_interfaces__rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\builtin_interfaces__rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\std_msgs__rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\std_msgs__rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\std_msgs__rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\std_msgs__rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\std_msgs__rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\sensor_msgs__rosidl_typesupport_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\sensor_msgs__rosidl_typesupport_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\sensor_msgs__rosidl_typesupport_introspection_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\sensor_msgs__rosidl_generator_c.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2)\install\bin\sensor_msgs__rosidl_typesupport_introspection_cpp.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(TinyXml2)\tinyxml2.dll">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp">
+        <DependentUpon>App.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="MainPage.xaml.cpp">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClCompile>
+
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+
+</Project>
