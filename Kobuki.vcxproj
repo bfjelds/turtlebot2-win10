@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <EclCore>..\ecl_core</EclCore>
-    <EclLite>..\ecl_lite</EclLite>
-    <EclNav>..\ecl_navigation</EclNav>
+    <EclCore>.\ecl_core</EclCore>
+    <EclLite>.\ecl_lite</EclLite>
+    <EclNav>.\ecl_navigation</EclNav>
     <Ros2>D:\git\ros2-onecore</Ros2>
-    <Sophus>..\Sophus</Sophus>
-    <KobukiCore>..\kobuki_core</KobukiCore>
+    <Sophus>.\Sophus</Sophus>
+    <KobukiCore>.\kobuki_core</KobukiCore>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -67,7 +67,7 @@
   <!-- COMMON -->
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_WIN32;WIN32;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
@@ -107,60 +107,23 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(EclCore)\ecl_devices\src\lib\serial_w32.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_exceptions\src\lib\standard_exception.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_geometry\src\lib\angle.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_threads\src\lib\mutex_w32.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_threads\src\lib\thread_win.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_time\src\lib\sleep_win.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_time\src\lib\timestamp_base.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclCore)\ecl_time\src\lib\timestamp_win.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclLite)\ecl_time_lite\src\lib\functions_win.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(EclNav)\ecl_mobile_robot\src\lib\kinematics\differential_drive.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\battery.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\command.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\core_sensors.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\diff_drive.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\event_manager.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\kobuki.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\packet_finder.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="$(EclCore)\ecl_devices\src\lib\serial_w32.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_exceptions\src\lib\standard_exception.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_geometry\src\lib\angle.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_threads\src\lib\mutex_w32.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_threads\src\lib\thread_win.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_time\src\lib\sleep_win.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_time\src\lib\timestamp_base.cpp"/>
+    <ClCompile Include="$(EclCore)\ecl_time\src\lib\timestamp_win.cpp"/>
+    <ClCompile Include="$(EclLite)\ecl_time_lite\src\lib\functions_win.cpp"/>
+    <ClCompile Include="$(EclNav)\ecl_mobile_robot\src\lib\kinematics\differential_drive.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\battery.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\command.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\core_sensors.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\diff_drive.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\event_manager.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\kobuki.cpp"/>
+    <ClCompile Include="$(KobukiCore)\kobuki_driver\src\driver\packet_finder.cpp"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
