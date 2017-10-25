@@ -23,7 +23,7 @@ repositories:
     type: git
     url: https://github.com/ooeygui/teleop_twist_joy
     version: ros2
-  turtlebot2-win10/turtlebot2-win10:
+  turtlebot2-win10:
     type: git
     url: https://github.com/bfjelds/turtlebot2-win10.git
     version: master
