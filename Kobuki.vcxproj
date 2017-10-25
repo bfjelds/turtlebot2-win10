@@ -4,7 +4,7 @@
     <EclCore>.\ecl_core</EclCore>
     <EclLite>.\ecl_lite</EclLite>
     <EclNav>.\ecl_navigation</EclNav>
-    <Ros2>D:\git\ros2-onecore</Ros2>
+    <Ros2>..\ros2</Ros2>
     <Sophus>.\Sophus</Sophus>
     <KobukiCore>.\kobuki_core</KobukiCore>
   </PropertyGroup>
@@ -34,6 +34,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <OutputDir>$(Ros2)\install\lib<OutputDir>
   </PropertyGroup>
   <!-- Debug -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

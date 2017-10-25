@@ -2,7 +2,7 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <Ros2>D:\git\ros2-onecore</Ros2>
+    <Ros2>..\..\ros2</Ros2>
     <TinyXml2>C:\ProgramData\chocolatey\lib\tinyxml2\lib</TinyXml2>
   </PropertyGroup>
 
