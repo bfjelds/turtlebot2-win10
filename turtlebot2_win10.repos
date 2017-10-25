@@ -1,4 +1,8 @@
 repositories:
+  turtlebot2-win10/turtlebot2_demo:
+    type: git
+    url: https://github.com/ros2/turtlebot2_demo.git
+    version: release-beta3
   turtlebot2-win10/kobuki:
     type: git
     url: https://github.com/yujinrobot/kobuki.git
@@ -15,6 +19,10 @@ repositories:
     type: git
     url: https://github.com/bfjelds/ecl_lite.git
     version: win10
+  turtlebot2-win10/sophus:
+    type: git
+    url: https://github.com/strasdat/Sophus.git
+    version: master
   turtlebot2-win10/ecl_navigation:
     type: git
     url: https://github.com/stonier/ecl_navigation.git
