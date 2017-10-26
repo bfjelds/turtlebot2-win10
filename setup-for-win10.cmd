@@ -13,7 +13,7 @@ type NUL > %TURTLEBOT2_WIN10_PATH%\kobuki_core\AMENT_IGNORE
 type NUL > %TURTLEBOT2_WIN10_PATH%\sophus\AMENT_IGNORE
 
 type NUL > %ROS_PATH%\class_loader\AMENT_IGNORE
-type NUL > %ROS_PATH%\console_bridge\AMENT_IGNORE
+rem type NUL > %ROS_PATH%\console_bridge\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\cartographer_ros\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\cartographer_ros\cartographer_rviz\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\cartographer_ros\docs\AMENT_IGNORE
