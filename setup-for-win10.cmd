@@ -1,3 +1,5 @@
+@echo off
+
 
 set TURTLEBOT2_WIN10_PATH=%~dp0
 set ROS_PATH=%TURTLEBOT2_WIN10_PATH%..\ros
