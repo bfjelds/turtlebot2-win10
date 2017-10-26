@@ -6,10 +6,12 @@
     <EclLite>.\ecl_lite</EclLite>
     <EclNav>.\ecl_navigation</EclNav>
     <Ros2>..\ros2</Ros2>
+    <Ros2Install>..\..\install</Ros2Install>
     <Sophus>.\Sophus</Sophus>
     <KobukiCore>.\kobuki_core</KobukiCore>
     <KobukiNode>.\turtlebot2_demo\turtlebot2_drivers\src</KobukiNode>
-    <KobukiDriver>.\kobuki\x64</KobukiDriver>
+    <KobukiDriver>$(Ros2Install)\lib</KobukiDriver>
+    <OutDir>$(Ros2Install)\bin</OutDir>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -37,7 +39,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <OutputDir>$(Ros2)\install\bin<OutputDir>
   </PropertyGroup>
   <!-- Debug -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -61,9 +62,9 @@
   <!-- COMMON -->
   <PropertyGroup>
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(Ros2)\install\Lib;$(VC_ReferencesPath_VC_X86)\..\onecore\x64;$(WindowsSDK_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(EclCore)\ecl_eigen\include\eigen3.1.2;$(Sophus);$(EclCore)\ecl_devices\include;$(EclLite)\ecl_time_lite\include;$(EclNav)\ecl_mobile_robot\include;$(EclCore)\ecl_time\include;$(EclCore)\ecl_threads\include;$(EclCore)\ecl_sigslots\include;$(EclCore)\ecl_utilities\include;$(EclCore)\ecl_concepts\include;$(EclCore)\ecl_containers\include;$(EclCore)\ecl_converters\include;$(EclLite)\ecl_errors\include;$(EclCore)\ecl_exceptions\include;$(EclCore)\ecl_formatters\include;$(EclCore)\ecl_math\include;$(EclCore)\ecl_mpl\include;$(EclCore)\ecl_type_traits\include;$(EclCore)\ecl_linear_algebra\include;$(EclLite)\ecl_config\include;$(EclCore)\ecl_geometry\include;$(Ros2)\install\include;$(KobukiCore)\kobuki_driver\include;$(Ros2)\src\ros2\rclcpp\rclcpp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <OutDir>$(Ros2)\install\bin</OutDir>
+    <LibraryPath>$(Ros2Install)\Lib;$(VC_ReferencesPath_VC_X86)\..\onecore\x64;$(WindowsSDK_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(EclCore)\ecl_eigen\include\eigen3.1.2;$(Sophus);$(EclCore)\ecl_devices\include;$(EclLite)\ecl_time_lite\include;$(EclNav)\ecl_mobile_robot\include;$(EclCore)\ecl_time\include;$(EclCore)\ecl_threads\include;$(EclCore)\ecl_sigslots\include;$(EclCore)\ecl_utilities\include;$(EclCore)\ecl_concepts\include;$(EclCore)\ecl_containers\include;$(EclCore)\ecl_converters\include;$(EclLite)\ecl_errors\include;$(EclCore)\ecl_exceptions\include;$(EclCore)\ecl_formatters\include;$(EclCore)\ecl_math\include;$(EclCore)\ecl_mpl\include;$(EclCore)\ecl_type_traits\include;$(EclCore)\ecl_linear_algebra\include;$(EclLite)\ecl_config\include;$(EclCore)\ecl_geometry\include;$(Ros2Install)\include;$(KobukiCore)\kobuki_driver\include;$(Ros2)\src\ros2\rclcpp\rclcpp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>$(Ros2Install)\bin</OutDir>
     <TargetName>kobuki_node</TargetName>
   </PropertyGroup>
   <!-- Debug -->
