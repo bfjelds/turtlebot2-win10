@@ -40,9 +40,12 @@
     1. From SSH.  Copy your APPX, dependency APPXs, and CER files.  Use the deployappx tool to install.
 1. Create C:\data\ROS2 on your MBM
 1. Copy contents of C:\dev\ros2\install to your MBM's C:\data\ROS2
-1. Create the following tasks on your MBM using SSH:
-    schtasks /create /tn Teleop /f /sc onstart /ru system /tr "C:\Data\ros2\Lib\teleop_twist_joy\teleop_node.exe" **TODO: FIX THIS PATH**
-    schtasks /create /tn Kobuki /f /sc onstart /ru system /tr "C:\data\ros2\bin\kobuki_node.exe"
+1. Create C:\data\ROS2\turtlebot2.cmd file to start the required Turtlebot2 nodes
+    set Path=c:\data\ros2\Scripts;c:\data\ros2\bin;%path%
+    start C:\data\ros2\bin\kobuki_node.exe
+    start C:\Data\ros2\Lib\teleop_twist_joy\teleop_node.exe
+1. Create the following task on your MBM using SSH:
+    schtasks /create /tn Turtlebot2 /f /sc onstart /ru system /tr "C:\Data\ros2\turtlebot2.bat"
 1. Configure GamepadNodeUwp to be the startup app on your MBM by using SSH:
     iotstartup add headed GamepadNodeUwp
 1. **TODO: fix this** Make sure network connection is present.  Can be network cable plugged in or wireless Wifi dongle (with required Wifi profile configured)
