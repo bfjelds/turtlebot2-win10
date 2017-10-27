@@ -76,6 +76,7 @@ rem type NUL > %ROS2_PATH%\turtlebot2_demo\build\turtlebot2_drivers\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\turtlebot2_demo\depthimage_to_pointcloud2\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\turtlebot2_demo\turtlebot2_drivers\build\turtlebot2_drivers\AMENT_IGNORE
 type NUL > %ROS2_PATH%\vision_opencv\cv_bridge\AMENT_IGNORE
+type NUL > %ROS2_PATH%\vision_opencv\image_geometry\AMENT_IGNORE
 type NUL > %ROS2_PATH%\vision_opencv\opencv_tests\AMENT_IGNORE
 type NUL > %ROS2_PATH%\vision_opencv\vision_opencv\AMENT_IGNORE
 rem type NUL > %ROS2_PATH%\wiimote\AMENT_IGNORE
