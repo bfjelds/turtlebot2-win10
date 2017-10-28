@@ -9,7 +9,7 @@ pushd %ROOT_PATH%
 echo .
 echo Configure the build to skip AMENT projects that aren't relevant
 echo .
-call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd
+call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter
 
 
 echo .
