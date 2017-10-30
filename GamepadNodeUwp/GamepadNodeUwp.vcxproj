@@ -75,7 +75,19 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_generator_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\lib\fastcdr-1.0.lib;$(Ros2Install)\lib\fastrtps-1.5.lib;$(Ros2Install)\Lib\rcutils.lib;$(Ros2Install)\Lib\rmw.lib;$(Ros2Install)\Lib\rmw_fastrtps_cpp.lib;$(Ros2Install)\Lib\rcl.lib;$(Ros2Install)\Lib\rclcpp.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_generator_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\rosidl_typesupport_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\rosidl_generator_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_introspection_cpp.lib;iphlpapi.lib;Shlwapi.lib;kernel32.lib;user32.lib;C:\ProgramData\chocolatey\lib\tinyxml2\lib\tinyxml2d.lib;onecoreuap.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_generator_c.lib;$(Ros2Install)\Lib\rcl_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\rcutils.lib;$(Ros2Install)\Lib\rmw.lib;$(Ros2Install)\Lib\rmw_fastrtps_cpp.lib;$(Ros2Install)\Lib\rcl.lib;$(Ros2Install)\Lib\rclcpp.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\geometry_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_generator_c.lib;$(Ros2Install)\Lib\builtin_interfaces__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\std_msgs__rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\rosidl_typesupport_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\rosidl_generator_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\rosidl_typesupport_introspection_cpp.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_cpp.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_introspection_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_generator_c.lib;$(Ros2Install)\Lib\sensor_msgs__rosidl_typesupport_introspection_cpp.lib;iphlpapi.lib;Shlwapi.lib;kernel32.lib;user32.lib;C:\ProgramData\chocolatey\lib\tinyxml2\lib\tinyxml2d.lib;onecoreuap.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <!-- RELEASE -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <Link>
+      <AdditionalDependencies>$(Ros2Install)\lib\fastrtps-1.5.lib;$(Ros2Install)\lib\fastcdr-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <!-- DEBUG -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <Link>
+      <AdditionalDependencies>$(Ros2Install)\lib\fastrtpsd-1.5.lib;$(Ros2Install)\lib\fastcdrd-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   
@@ -130,10 +142,16 @@
     <None Include="$(Ros2Install)\bin\rcl_interfaces__rosidl_typesupport_introspection_cpp.dll">
         <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(Ros2Install)\bin\fastcdr-1.0.dll">
+    <None Include="$(Ros2Install)\bin\fastcdr-1.0.dll" Condition="'$(Configuration)'=='Release'" Label="Configuration">
         <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(Ros2Install)\bin\fastrtps-1.5.dll">
+    <None Include="$(Ros2Install)\bin\fastrtps-1.5.dll" Condition="'$(Configuration)'=='Release'" Label="Configuration">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2Install)\bin\fastcdrd-1.0.dll" Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(Ros2Install)\bin\fastrtpsd-1.5.dll" Condition="'$(Configuration)'=='Debug'" Label="Configuration">
         <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(Ros2Install)\bin\rcutils.dll">
@@ -226,7 +244,10 @@
     <None Include="$(Ros2Install)\bin\sensor_msgs__rosidl_typesupport_introspection_cpp.dll">
         <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(TinyXml2)\tinyxml2.dll">
+    <None Include="$(TinyXml2)\tinyxml2.dll" Condition="'$(Configuration)'=='Release'" Label="Configuration">
+        <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(TinyXml2)\tinyxml2d.dll" Condition="'$(Configuration)'=='Debug'" Label="Configuration">
         <DeploymentContent>true</DeploymentContent>
     </None>
 
