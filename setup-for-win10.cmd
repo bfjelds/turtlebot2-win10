@@ -91,7 +91,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry\test
 
 
 
-goto:EOF
+exit /b 0
 
 
 rem
