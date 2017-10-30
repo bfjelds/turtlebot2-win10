@@ -38,10 +38,6 @@ changing C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cm
 	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib")
 	  endif()
 	
-You may be able to do the same thing by changing build.cmd to use this command (in my experience, this does not work ... console_bridge fails, we probably don't need this though, may be able to ignore more projects in setup-for-win10.cmd):
-
-     python src\ament\ament_tools\scripts\ament.py build --cmake-args  -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0.15063.0
-
 
 Also, to use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake from:
 
