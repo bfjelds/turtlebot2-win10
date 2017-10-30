@@ -17,12 +17,6 @@ echo Build ROS2 binaries for Windows 10 Iot Core
 echo .
 python src\ament\ament_tools\scripts\ament.py build
 
-echo .
-echo Build Kobuki binary for Windows 10 Iot Core
-echo .
-msbuild %TURTLEBOT2_WIN10_PATH%\kobuki.vcxproj /p:Configuration=Release /p:Platform=x64 /t:clean;build
-msbuild %TURTLEBOT2_WIN10_PATH%\kobuki-node.vcxproj /p:Configuration=Release /p:Platform=x64 /t:clean;build
-
 
 echo .
 echo Build Gamepad UWP binary for Windows 10 Iot Core
