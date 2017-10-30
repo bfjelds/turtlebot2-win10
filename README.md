@@ -6,7 +6,7 @@
 
 1. Visual Studio 2017
 
-1. MinnowboardMax as x64 Windows IoT Core
+1. MinnowboardMax as x64 Windows IoT Core (with fix for Gamepad API)
 
 1. Turtlebot2
 
@@ -17,8 +17,9 @@
 ## Download and Build
 
 ```
-NOTE: I have changed the way CMAKE works so that by default it only links to onecoreuap.lib.  I did this by
-changing C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake on the line below marked with ****
+NOTE: I have changed the way CMAKE works so that by default it only links to onecoreuap.lib.  I 
+did this by changing C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake 
+on the line below marked with ****
 
 	  if(_MSVC_C_ARCHITECTURE_FAMILY STREQUAL "ARM" OR _MSVC_CXX_ARCHITECTURE_FAMILY STREQUAL "ARM")
 	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib")
@@ -50,10 +51,13 @@ to this:
     set(OpenCV_RUNTIME vc15)
 
 
-To build debug binaries:
+To build debug binaries, follow the "Extra stuff for Debug mode" instructions found here 
+https://github.com/ros2/ros2/wiki/Windows-Development-Setup.  Then build using the following 
+command:
 
      python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
-
+    
+     
 ```
 
 1. Using 'x64 Native Tools Command Prompt for VS **2017**' (not **2015**), follow setup instructions (up to, **BUT NOT INCLUDING**, Building the ROS 2 Code) for ROS2 found 
