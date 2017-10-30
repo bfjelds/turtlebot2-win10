@@ -6,7 +6,7 @@
 
 1. Visual Studio 2017
 
-1. MinnowboardMax as x64 Windows IoT Core
+1. MinnowboardMax as x64 Windows IoT Core (with fix for Gamepad API)
 
 1. Turtlebot2
 
