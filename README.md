@@ -54,6 +54,9 @@ to this:
     set(OpenCV_RUNTIME vc15)
 
 
+To build debug binaries:
+
+     python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
 
 ```
 
