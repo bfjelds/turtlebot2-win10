@@ -18,6 +18,13 @@ call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\class_loader
 rem call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\console_bridge
 
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\poco_vendor
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\actionlib_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\diagnostic_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\shape_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\std_srvs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\stereo_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\trajectory_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\visualization_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\demos\composition
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\demos\demo_nodes_cpp
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\demos\demo_nodes_cpp_native
@@ -39,13 +46,10 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_service
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_subscriber
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_timer
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\example_interfaces
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\std_srvs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\stereo_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\trajectory_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\visualization_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\diagnostic_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\actionlib_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\shape_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\geometry2
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\test_tf2
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\tf2_eigen
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\tf2_geometry_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\doc
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\examples
@@ -58,6 +62,14 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\realtime_support\tlsf_cpp
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\robot_model\kdl_parser
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\robot_model\urdf
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\robot_state_publisher
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros1_bridge
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2cli
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2msg
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2node
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2pkg
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2run
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2srv
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\sros2
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\system_tests\test_communication
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\system_tests\test_rclcpp
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\tlsf\tlsf
@@ -77,20 +89,6 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\cv_bridge\test
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry\test
 
-
-goto:EOF
-
-
-rem
-rem Next on the list to consider ignoring
-rem
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\std_srvs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\stereo_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\trajectory_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\visualization_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\diagnostic_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\actionlib_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\shape_msgs
 
 
 goto:EOF
@@ -152,7 +150,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\tlsf\tlsf
 echo In AddOrRemoveAmentIgnore %~1 %~2
 set IGNORE_FILE=%~2\AMENT_IGNORE
 
-if "%~1" == "add" (
+if "%~1" == "filter" (
 
     if EXIST "%IGNORE_FILE%" ( 
         echo %IGNORE_FILE% already exists!!
@@ -163,7 +161,7 @@ if "%~1" == "add" (
     goto:EOF
 
 )
-if "%~1" == "remove" (
+if "%~1" == "reset" (
 
     del /Q %IGNORE_FILE%
     

@@ -45,7 +45,7 @@ class Joystick
 protected:
 	// bool open_;              
 
-	Windows::Gaming::Input::IGamepad^ connectedGamepad = nullptr;
+	Windows::Gaming::Input::IGamepad^ _connectedGamepad = nullptr;
 	EventRegistrationToken GamepadAddedToken;
 	EventRegistrationToken GamepadRemovedToken;
 
@@ -68,11 +68,13 @@ public:
 
 		auto cbAdd = ref new Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad ^>([this](Platform::Object^, Windows::Gaming::Input::IGamepad^ pad)
 		{
+			_connectedGamepad = pad;
 			OutputDebugStringA("Gamepad connected!!!\r\n");
 		});
 
 		auto cbRemove = ref new Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad ^>([this](Platform::Object^, Windows::Gaming::Input::IGamepad^ pad)
 		{
+			_connectedGamepad = nullptr;
 			OutputDebugStringA("Gamepad removed!!!\r\n");
 		});
 
@@ -209,9 +211,16 @@ public:
 				{
 					auto spGamepadCollection = Windows::Gaming::Input::Gamepad::Gamepads;
 					auto nGamepads = spGamepadCollection->Size;
-					if (nGamepads != 0)
+					auto numGamepadsText = ref new Platform::String() +
+						"Gamepad count:" + nGamepads.ToString() + "\r\n";
+					OutputDebugString(numGamepadsText->Data());
+
+
+					//if (nGamepads != 0)
+					if (_connectedGamepad != nullptr)
 					{
-						auto connectedGamepad = spGamepadCollection->GetAt(0);
+						//auto connectedGamepad = spGamepadCollection->GetAt(nGamepads - 1);
+						auto connectedGamepad = _connectedGamepad;
 						auto currentReading = connectedGamepad->GetCurrentReading();
 						auto statusText = ref new Platform::String() +
 							"Gamepad reading:\r\n\tLeftThumbstickX=" + currentReading.LeftThumbstickX.ToString() +
@@ -247,6 +256,20 @@ public:
 							pub->publish(joy_msg);
 							enabledLast = buttonOnOff;
 						}
+					}
+					else
+					{
+						auto statusText = ref new Platform::String(L"No Gamepad connected");
+						OutputDebugString(statusText->Data());
+						mainPage->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([=]() {
+							try {
+								status->Text = statusText;
+							}
+							catch (...)
+							{
+							}
+
+						}));
 					}
 
 					WaitForSingleObject(GetCurrentThread(), 20);

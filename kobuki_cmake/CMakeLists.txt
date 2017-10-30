@@ -79,23 +79,11 @@ set(${PROJECT_NAME}_SRCS
   ../kobuki_core/kobuki_driver/src/driver/packet_finder.cpp
 )
 
-#add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SRCS})
-#ament_target_dependencies(${PROJECT_NAME}
-#  "rcl"
-#  "rclcpp"
-#  "rcutils"
-#  "tf2"
-#  "tf2_ros"
-#  "sensor_msgs"
-#  "nav_msgs"
-#  "geometry_msgs")
-
 add_executable(${PROJECT_NAME}_node 
   ../turtlebot2_demo/turtlebot2_drivers/src/kobuki_node.cpp
   ${${PROJECT_NAME}_SRCS}
 )
 target_link_libraries(${PROJECT_NAME}_node 
-#  ${PROJECT_NAME}
   ${std_msgs_LIBRARIES}
   ${rcl_LIBRARIES}
   ${rclcpp_LIBRARIES}
@@ -107,22 +95,8 @@ target_link_libraries(${PROJECT_NAME}_node
   ${geometry_msgs_LIBRARIES}
 )
 
-# Causes the visibility macros to use dllexport rather than dllimport,
-# which is appropriate when building the dll but not consuming it.
-#target_compile_definitions(${PROJECT_NAME}
-# PRIVATE "KOBUKI_BUILDING_LIBRARY")
-
-#install(TARGETS ${PROJECT_NAME}
-#  ARCHIVE DESTINATION lib
-#  LIBRARY DESTINATION lib
-#  RUNTIME DESTINATION bin)
-
 install(TARGETS ${PROJECT_NAME}_node
-  DESTINATION lib/${PROJECT_NAME})
+  DESTINATION bin)
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION include)
-
-ament_export_include_directories(include)
-ament_export_libraries(${PROJECT_NAME})
+ament_export_libraries(${PROJECT_NAME}_node)
 ament_package()
