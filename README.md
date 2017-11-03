@@ -143,7 +143,7 @@ development folder of `c:\dev\ros2`):
      ```
 1. The UWP Gamepad app requires a valid network connection to communicate with the other nodes.
 If you create a set of nodes that don't involve UWP, you can enable loopback without a network
-connection by following [these steps](.\NoNetwork.md)
+connection by following [these steps](./NoNetwork.md)
 
 1. Restart device.
 
