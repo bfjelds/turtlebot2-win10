@@ -141,8 +141,9 @@ development folder of `c:\dev\ros2`):
      ```
      iotstartup add headed GamepadNodeUwp
      ```
-1. **TODO: fix this** Make sure network connection is present.  Can be network cable plugged in or wireless 
-Wifi dongle (with required Wifi profile configured)
+1. The UWP Gamepad app requires a valid network connection to communicate with the other nodes.
+If you create a set of nodes that don't involve UWP, you can enable loopback without a network
+connection by following [these steps](.\NoNetwork.md)
 
 1. Restart device.
 
