@@ -17,8 +17,9 @@
 ## Download and Build
 
 ```
-NOTE: I have changed the way CMAKE works so that by default it only links to onecoreuap.lib.  I 
-did this by changing C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake 
+NOTE: to build this specifically for Window 10 IoT Core, I have changed the way CMAKE works so that
+by default it only links to onecoreuap.lib.  This is not required because of the API forwarders.  To
+do this, change C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake 
 on the line below marked with ****
 
 	  if(_MSVC_C_ARCHITECTURE_FAMILY STREQUAL "ARM" OR _MSVC_CXX_ARCHITECTURE_FAMILY STREQUAL "ARM")
