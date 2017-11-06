@@ -25,7 +25,7 @@ rclcpp::publisher::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
-bool _verbose = false;
+bool verbose_ = false;
 
 //
 // State
