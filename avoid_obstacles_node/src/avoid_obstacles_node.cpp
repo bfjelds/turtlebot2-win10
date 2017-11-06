@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES // for C++  
+#include <cmath>  
 
 #include <algorithm>
 #include <iostream>
@@ -7,22 +9,27 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-#include <geometry_msgs/Twist.h>
-#include <kobuki_msgs/BumperEvent.h>
-#include <kobuki_msgs/CliffEvent.h>
-#include <kobuki_msgs/Led.h>
-#include <kobuki_msgs/WheelDropEvent.h>
+#include <geometry_msgs/msg/twist.hpp>
+
+#include <kobuki_msgs/msg/bumper_event.hpp>
+#include <kobuki_msgs/msg/cliff_event.hpp>
+#include <kobuki_msgs/msg/led.hpp>
+#include <kobuki_msgs/msg/wheel_drop_event.hpp>
+
+#include <chrono>
 
 //
 // Publishers
 //
 rclcpp::publisher::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
-rclcpp::publisher::Publisher<kobuki_msgs::Led>::SharedPtr led1_pub;
-rclcpp::publisher::Publisher<kobuki_msgs::Led>::SharedPtr led2_pub;
+rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
+rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
 //
 // State
 //
+/// Flag for changing direction
+bool change_direction_;
 /// Flag for stopping
 bool stop_;
 /// Flag for left bumper's state
@@ -52,35 +59,35 @@ double vel_lin_;
 /// Angular velocity for rotating
 double vel_ang_;
 /// Randomly chosen turning duration
-ros::Duration turning_duration_;
+std::chrono::duration<double> turning_duration_;
 /// Randomly chosen turning direction
 int turning_direction_;
 /// Start time of turning
-ros::Time turning_start_;
+std::chrono::duration<double> turning_start_;
 /// Flag for turning state
 bool turning_;
 
-static void bumperCallback(const kobuki_msgs::BumperEventConstPtr msg)
+static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr msg)
 {
-    if (msg->state == kobuki_msgs::BumperEvent::PRESSED)
+    if (msg->state == kobuki_msgs::msg::BumperEvent::PRESSED)
     {
       switch (msg->bumper)
       {
-        case kobuki_msgs::BumperEvent::LEFT:
+        case kobuki_msgs::msg::BumperEvent::LEFT:
           if (!bumper_left_pressed_)
           {
             bumper_left_pressed_ = true;
             change_direction_ = true;
           }
           break;
-        case kobuki_msgs::BumperEvent::CENTER:
+        case kobuki_msgs::msg::BumperEvent::CENTER:
           if (!bumper_center_pressed_)
           {
             bumper_center_pressed_ = true;
             change_direction_ = true;
           }
           break;
-        case kobuki_msgs::BumperEvent::RIGHT:
+        case kobuki_msgs::msg::BumperEvent::RIGHT:
           if (!bumper_right_pressed_)
           {
             bumper_right_pressed_ = true;
@@ -93,54 +100,54 @@ static void bumperCallback(const kobuki_msgs::BumperEventConstPtr msg)
     {
       switch (msg->bumper)
       {
-        case kobuki_msgs::BumperEvent::LEFT:    bumper_left_pressed_   = false; break;
-        case kobuki_msgs::BumperEvent::CENTER:  bumper_center_pressed_ = false; break;
-        case kobuki_msgs::BumperEvent::RIGHT:   bumper_right_pressed_  = false; break;
+        case kobuki_msgs::msg::BumperEvent::LEFT:    bumper_left_pressed_   = false; break;
+        case kobuki_msgs::msg::BumperEvent::CENTER:  bumper_center_pressed_ = false; break;
+        case kobuki_msgs::msg::BumperEvent::RIGHT:   bumper_right_pressed_  = false; break;
       }
     }
     if (!led_bumper_on_ && (bumper_left_pressed_ || bumper_center_pressed_ || bumper_right_pressed_))
     {
-      kobuki_msgs::LedPtr led_msg_ptr;
-      led_msg_ptr.reset(new kobuki_msgs::Led());
-      led_msg_ptr->value = kobuki_msgs::Led::ORANGE;
-      led1_publisher_.publish(led_msg_ptr);
+      kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+      led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+      led_msg_ptr->value = kobuki_msgs::msg::Led::ORANGE;
+      led1_pub->publish(led_msg_ptr);
       led_bumper_on_ = true;
     }
     else if (led_bumper_on_ && (!bumper_left_pressed_ && !bumper_center_pressed_ && !bumper_right_pressed_))
     {
-      kobuki_msgs::LedPtr led_msg_ptr;
-      led_msg_ptr.reset(new kobuki_msgs::Led());
-      led_msg_ptr->value = kobuki_msgs::Led::BLACK;
-      led1_publisher_.publish(led_msg_ptr);
+      kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+      led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+      led_msg_ptr->value = kobuki_msgs::msg::Led::BLACK;
+      led1_pub->publish(led_msg_ptr);
       led_bumper_on_ = false;
     }
     if (change_direction_)
     {
-      ROS_INFO_STREAM("Bumper pressed. Changing direction. [" << name_ << "]");
+      //ROS_INFO_STREAM("Bumper pressed. Changing direction. [" << name_ << "]");
     }
 }
 
-static void cliffCallback(const kobuki_msgs::CliffEventConstPtr msg)
+static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg)
 {
-  if (msg->state == kobuki_msgs::CliffEvent::CLIFF)
+  if (msg->state == kobuki_msgs::msg::CliffEvent::CLIFF)
   {
     switch (msg->sensor)
     {
-      case kobuki_msgs::CliffEvent::LEFT:
+      case kobuki_msgs::msg::CliffEvent::LEFT:
         if (!cliff_left_detected_)
         {
           cliff_left_detected_ = true;
           change_direction_ = true;
         }
         break;
-      case kobuki_msgs::CliffEvent::CENTER:
+      case kobuki_msgs::msg::CliffEvent::CENTER:
         if (!cliff_center_detected_)
         {
           cliff_center_detected_ = true;
           change_direction_ = true;
         }
         break;
-      case kobuki_msgs::CliffEvent::RIGHT:
+      case kobuki_msgs::msg::CliffEvent::RIGHT:
         if (!cliff_right_detected_)
         {
           cliff_right_detected_ = true;
@@ -149,51 +156,51 @@ static void cliffCallback(const kobuki_msgs::CliffEventConstPtr msg)
         break;
     }
   }
-  else // kobuki_msgs::BumperEvent::FLOOR
+  else // kobuki_msgs::msg::BumperEvent::FLOOR
   {
     switch (msg->sensor)
     {
-      case kobuki_msgs::CliffEvent::LEFT:    cliff_left_detected_   = false; break;
-      case kobuki_msgs::CliffEvent::CENTER:  cliff_center_detected_ = false; break;
-      case kobuki_msgs::CliffEvent::RIGHT:   cliff_right_detected_  = false; break;
+      case kobuki_msgs::msg::CliffEvent::LEFT:    cliff_left_detected_   = false; break;
+      case kobuki_msgs::msg::CliffEvent::CENTER:  cliff_center_detected_ = false; break;
+      case kobuki_msgs::msg::CliffEvent::RIGHT:   cliff_right_detected_  = false; break;
     }
   }
   if (!led_cliff_on_ && (cliff_left_detected_ || cliff_center_detected_ || cliff_right_detected_))
   {
-    kobuki_msgs::LedPtr led_msg_ptr;
-    led_msg_ptr.reset(new kobuki_msgs::Led());
-    led_msg_ptr->value = kobuki_msgs::Led::ORANGE;
-    led2_publisher_.publish(led_msg_ptr);
+    kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+    led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+    led_msg_ptr->value = kobuki_msgs::msg::Led::ORANGE;
+    led2_pub->publish(led_msg_ptr);
     led_cliff_on_ = true;
   }
   else if (led_cliff_on_ && (!cliff_left_detected_ && !cliff_center_detected_ && !cliff_right_detected_))
   {
-    kobuki_msgs::LedPtr led_msg_ptr;
-    led_msg_ptr.reset(new kobuki_msgs::Led());
-    led_msg_ptr->value = kobuki_msgs::Led::BLACK;
-    led2_publisher_.publish(led_msg_ptr);
+    kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+    led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+    led_msg_ptr->value = kobuki_msgs::msg::Led::BLACK;
+    led2_pub->publish(led_msg_ptr);
     led_cliff_on_ = false;
   }
   if (change_direction_)
   {
-    ROS_INFO_STREAM("Cliff detected. Changing direction. [" << name_ << "]");
+    //ROS_INFO_STREAM("Cliff detected. Changing direction. [" << name_ << "]");
   }
 
 }
 
-static void dropCallback(const kobuki_msgs::BumperEventConstPtr msg)
+static void dropCallback(const kobuki_msgs::msg::WheelDropEvent::ConstSharedPtr msg)
 {
-  if (msg->state == kobuki_msgs::WheelDropEvent::DROPPED)
+  if (msg->state == kobuki_msgs::msg::WheelDropEvent::DROPPED)
   {
     switch (msg->wheel)
     {
-      case kobuki_msgs::WheelDropEvent::LEFT:
+      case kobuki_msgs::msg::WheelDropEvent::LEFT:
         if (!wheel_drop_left_detected_)
         {
           wheel_drop_left_detected_ = true;
         }
         break;
-      case kobuki_msgs::WheelDropEvent::RIGHT:
+      case kobuki_msgs::msg::WheelDropEvent::RIGHT:
         if (!wheel_drop_right_detected_)
         {
           wheel_drop_right_detected_ = true;
@@ -201,47 +208,46 @@ static void dropCallback(const kobuki_msgs::BumperEventConstPtr msg)
         break;
     }
   }
-  else // kobuki_msgs::WheelDropEvent::RAISED
+  else // kobuki_msgs::msg::WheelDropEvent::RAISED
   {
     switch (msg->wheel)
     {
-      case kobuki_msgs::WheelDropEvent::LEFT:    wheel_drop_left_detected_   = false; break;
-      case kobuki_msgs::WheelDropEvent::RIGHT:   wheel_drop_right_detected_  = false; break;
+      case kobuki_msgs::msg::WheelDropEvent::LEFT:    wheel_drop_left_detected_   = false; break;
+      case kobuki_msgs::msg::WheelDropEvent::RIGHT:   wheel_drop_right_detected_  = false; break;
     }
   }
   if (!led_wheel_drop_on_ && (wheel_drop_left_detected_ || wheel_drop_right_detected_))
   {
-    kobuki_msgs::LedPtr led_msg_ptr;
-    led_msg_ptr.reset(new kobuki_msgs::Led());
-    led_msg_ptr->value = kobuki_msgs::Led::RED;
-    led1_publisher_.publish(led_msg_ptr);
-    led2_publisher_.publish(led_msg_ptr);
+    kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+    led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+    led_msg_ptr->value = kobuki_msgs::msg::Led::RED;
+    led1_pub->publish(led_msg_ptr);
+    led2_pub->publish(led_msg_ptr);
     stop_ = true;
     led_wheel_drop_on_ = true;
   }
   else if (led_wheel_drop_on_ && (!wheel_drop_left_detected_ && !wheel_drop_right_detected_))
   {
-    kobuki_msgs::LedPtr led_msg_ptr;
-    led_msg_ptr.reset(new kobuki_msgs::Led());
-    led_msg_ptr->value = kobuki_msgs::Led::BLACK;
-    led1_publisher_.publish(led_msg_ptr);
-    led2_publisher_.publish(led_msg_ptr);
+    kobuki_msgs::msg::Led::SharedPtr led_msg_ptr;
+    led_msg_ptr.reset(new kobuki_msgs::msg::Led());
+    led_msg_ptr->value = kobuki_msgs::msg::Led::BLACK;
+    led1_pub->publish(led_msg_ptr);
+    led2_pub->publish(led_msg_ptr);
     stop_ = false;
     led_wheel_drop_on_ = false;
   }
   if (change_direction_)
   {
-    ROS_INFO_STREAM("Wheel(s) dropped. Stopping. [" << name_ << "]");
+    //ROS_INFO_STREAM("Wheel(s) dropped. Stopping. [" << name_ << "]");
   }
 }
 
 static void handle_sensor_input()
 {
-  if (this->getState()) // check, if the controller is active
   {
     // Velocity commands
-    geometry_msgs::TwistPtr cmd_vel_msg_ptr;
-    cmd_vel_msg_ptr.reset(new geometry_msgs::Twist());
+    geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
+    cmd_vel_msg_ptr.reset(new geometry_msgs::msg::Twist());
 
     if (stop_)
     {
@@ -252,9 +258,8 @@ static void handle_sensor_input()
     if (change_direction_)
     {
       change_direction_ = false;
-      // calculate a random turning angle (-180 ... +180) based on the set angular velocity
-      // time for turning 180 degrees in seconds = M_PI / angular velocity
-      turning_duration_ = ros::Duration(((double)std::rand() / (double)RAND_MAX) * (M_PI / vel_ang_));
+	  auto seconds = ((double)std::rand() / (double)RAND_MAX) * (M_PI / vel_ang_);
+	  turning_duration_ = std::chrono::seconds((long long)seconds);
       // randomly chosen turning direction
       if (((double)std::rand() / (double)RAND_MAX) >= 0.5)
       {
@@ -264,15 +269,17 @@ static void handle_sensor_input()
       {
         turning_direction_ = -1;
       }
-      turning_start_ = ros::Time::now();
+	  std::chrono::high_resolution_clock clock;
+      auto now = clock.now();
+	  auto time_since_epoch = now.time_since_epoch();
+	  turning_start_ = std::chrono::duration_cast<std::chrono::seconds>(time_since_epoch);
       turning_ = true;
-      ROS_INFO_STREAM("Will rotate " << turning_direction_ * turning_duration_.toSec() * vel_ang_ / M_PI * 180
-                      << " degrees. [" << name_ << "]");
     }
 
     if (turning_)
     {
-      if ((ros::Time::now() - turning_start_) < turning_duration_)
+	  std::chrono::high_resolution_clock clock;
+      if ((clock.now().time_since_epoch() - turning_start_) < turning_duration_)
       {
         cmd_vel_msg_ptr->angular.z = turning_direction_ * vel_ang_;
         vel_pub->publish(cmd_vel_msg_ptr);
@@ -298,19 +305,19 @@ int main(int argc, char * argv[])
   auto node = rclcpp::node::Node::make_shared("avoid_obstacles_node");
   vel_pub = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",
     rmw_qos_profile_sensor_data);
-  led1_pub = node->create_publisher<kobuki_msgs::Led>("commands/led1",
+  led1_pub = node->create_publisher<kobuki_msgs::msg::Led>("commands/led1",
     rmw_qos_profile_sensor_data);
-  led2_pub = node->create_publisher<kobuki_msgs::Led> ("commands/led2",
+  led2_pub = node->create_publisher<kobuki_msgs::msg::Led> ("commands/led2",
     rmw_qos_profile_sensor_data);
     
 
-  auto bumper_sub = node->create_subscription<geometry_msgs::msg::Twist>(
+  auto bumper_sub = node->create_subscription<kobuki_msgs::msg::BumperEvent>(
     "events/bumper", bumperCallback, rmw_qos_profile_sensor_data);
 
-  auto cliff_sub = node->create_subscription<geometry_msgs::msg::Twist>(
+  auto cliff_sub = node->create_subscription<kobuki_msgs::msg::CliffEvent>(
     "events/cliff", cliffCallback, rmw_qos_profile_sensor_data);
   
-  auto drop_sub = node->create_subscription<geometry_msgs::msg::Twist>(
+  auto drop_sub = node->create_subscription<kobuki_msgs::msg::WheelDropEvent>(
     "events/drop", dropCallback, rmw_qos_profile_sensor_data);
 
   rclcpp::WallRate loop_rate(20);
