@@ -12,6 +12,7 @@ call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_lite
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_navigation
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_core
+call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_msgs
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\sophus
 
 call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\class_loader

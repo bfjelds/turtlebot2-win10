@@ -11,6 +11,10 @@ repositories:
     type: git
     url: https://github.com/bfjelds/kobuki_core.git
     version: win10
+  turtlebot2-win10/kobuki_msgs:
+    type: git
+    url: https://github.com/yujinrobot/kobuki_msgs.git
+    version: kinetic
   turtlebot2-win10/ecl_core:
     type: git
     url: https://github.com/bfjelds/ecl_core.git
