@@ -25,6 +25,8 @@ rclcpp::publisher::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
+bool _verbose = false;
+
 //
 // State
 //
@@ -69,6 +71,7 @@ bool turning_;
 
 static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr msg)
 {
+    if (verbose_) printf("bumperCallback %d \r\n", msg->bumper);
     if (msg->state == kobuki_msgs::msg::BumperEvent::PRESSED)
     {
       switch (msg->bumper)
@@ -129,6 +132,8 @@ static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr m
 
 static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg)
 {
+  if (verbose_) printf("cliffCallback %d \r\n", msg->sensor);
+
   if (msg->state == kobuki_msgs::msg::CliffEvent::CLIFF)
   {
     switch (msg->sensor)
@@ -190,6 +195,8 @@ static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg
 
 static void dropCallback(const kobuki_msgs::msg::WheelDropEvent::ConstSharedPtr msg)
 {
+  if (verbose_) printf("dropCallback %d \r\n", msg->wheel);
+
   if (msg->state == kobuki_msgs::msg::WheelDropEvent::DROPPED)
   {
     switch (msg->wheel)
@@ -244,6 +251,7 @@ static void dropCallback(const kobuki_msgs::msg::WheelDropEvent::ConstSharedPtr 
 
 static void handle_sensor_input()
 {
+  if (verbose_) printf("\t handle_sensor_input ... \r\n");
   {
     // Velocity commands
     geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
@@ -255,6 +263,7 @@ static void handle_sensor_input()
       return;
     }
 
+    if (verbose_) printf("\t\t post stop ... \r\n");
     if (change_direction_)
     {
       change_direction_ = false;
@@ -275,6 +284,7 @@ static void handle_sensor_input()
       turning_start_ = std::chrono::duration_cast<std::chrono::seconds>(time_since_epoch);
       turning_ = true;
     }
+    if (verbose_) printf("\t\t post if(change_direction_) ... \r\n");
 
     if (turning_)
     {
@@ -291,25 +301,37 @@ static void handle_sensor_input()
     }
     else
     {
+      if (verbose_) printf("\t\t not turning ... but moving %f ... \r\n", vel_lin_);
       cmd_vel_msg_ptr->linear.x = vel_lin_;
       vel_pub->publish(cmd_vel_msg_ptr);
     }
+    if (verbose_) printf("\t\t post if(turning_) ... \r\n");
   }
 };
 
 
 int main(int argc, char * argv[])
 {
-  rclcpp::init(argc, argv);
+  if (verbose_) printf("main \r\n");
 
-  auto node = rclcpp::node::Node::make_shared("avoid_obstacles_node");
+  rclcpp::init(argc, argv);
+  if (verbose_) printf("\t post rclcpp::init \r\n");
+
+  vel_lin_ = 0.5;
+  vel_ang_ = 0.1;
+
+  auto node = std::make_shared<rclcpp::Node>("avoid_obstacles_node");
+  if (verbose_) printf("\t post node creation \r\n");
   vel_pub = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",
     rmw_qos_profile_sensor_data);
+  if (verbose_) printf("\t post cmd_vel publisher creation \r\n");
   led1_pub = node->create_publisher<kobuki_msgs::msg::Led>("commands/led1",
     rmw_qos_profile_sensor_data);
+  if (verbose_) printf("\t post led1 publisher creation \r\n");
   led2_pub = node->create_publisher<kobuki_msgs::msg::Led> ("commands/led2",
     rmw_qos_profile_sensor_data);
-    
+  if (verbose_) printf("\t post led2 publisher creation \r\n");
+
 
   auto bumper_sub = node->create_subscription<kobuki_msgs::msg::BumperEvent>(
     "events/bumper", bumperCallback, rmw_qos_profile_sensor_data);
@@ -320,6 +342,8 @@ int main(int argc, char * argv[])
   auto drop_sub = node->create_subscription<kobuki_msgs::msg::WheelDropEvent>(
     "events/drop", dropCallback, rmw_qos_profile_sensor_data);
 
+  if (verbose_) printf("\t post subscription creation \r\n");
+
   rclcpp::WallRate loop_rate(20);
   while (rclcpp::ok()) {
       
@@ -328,6 +352,7 @@ int main(int argc, char * argv[])
       loop_rate.sleep();
       
   }
-  
+  if (verbose_) printf("end of main \r\n");
+
   return 0;
 }
