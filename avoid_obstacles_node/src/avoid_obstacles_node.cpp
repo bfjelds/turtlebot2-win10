@@ -258,8 +258,8 @@ static void handle_sensor_input()
     if (change_direction_)
     {
       change_direction_ = false;
-	  auto seconds = ((double)std::rand() / (double)RAND_MAX) * (M_PI / vel_ang_);
-	  turning_duration_ = std::chrono::seconds((long long)seconds);
+      auto seconds = ((double)std::rand() / (double)RAND_MAX) * (M_PI / vel_ang_);
+      turning_duration_ = std::chrono::seconds((long long)seconds);
       // randomly chosen turning direction
       if (((double)std::rand() / (double)RAND_MAX) >= 0.5)
       {
@@ -269,16 +269,16 @@ static void handle_sensor_input()
       {
         turning_direction_ = -1;
       }
-	  std::chrono::high_resolution_clock clock;
+      std::chrono::high_resolution_clock clock;
       auto now = clock.now();
-	  auto time_since_epoch = now.time_since_epoch();
-	  turning_start_ = std::chrono::duration_cast<std::chrono::seconds>(time_since_epoch);
+      auto time_since_epoch = now.time_since_epoch();
+      turning_start_ = std::chrono::duration_cast<std::chrono::seconds>(time_since_epoch);
       turning_ = true;
     }
 
     if (turning_)
     {
-	  std::chrono::high_resolution_clock clock;
+      std::chrono::high_resolution_clock clock;
       if ((clock.now().time_since_epoch() - turning_start_) < turning_duration_)
       {
         cmd_vel_msg_ptr->angular.z = turning_direction_ * vel_ang_;
