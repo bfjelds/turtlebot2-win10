@@ -41,7 +41,6 @@ add_executable(${PROJECT_NAME}_node
   ${${PROJECT_NAME}_node_SRCS}
 )
 target_link_libraries(${PROJECT_NAME}_node 
-  ${std_msgs_LIBRARIES}
   ${rcl_LIBRARIES}
   ${rclcpp_LIBRARIES}
   ${rcutils_LIBRARIES}
