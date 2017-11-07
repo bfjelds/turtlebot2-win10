@@ -38,4 +38,4 @@ repositories:
   turtlebot2-win10:
     type: git
     url: https://github.com/bfjelds/turtlebot2-win10.git
-    version: master
+    version: win10
