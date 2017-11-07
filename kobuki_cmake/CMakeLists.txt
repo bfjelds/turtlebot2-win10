@@ -12,6 +12,9 @@ find_package(tf2_ros REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(kobuki_msgs REQUIRED)
+
+add_definitions(-DROS2)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -35,6 +38,7 @@ include_directories(include
   ${sensor_msgs_INCLUDE_DIRS}
   ${nav_msgs_INCLUDE_DIRS}
   ${geometry_msgs_INCLUDE_DIRS}
+  ${kobuki_msgs_INCLUDE_DIRS}
   ../ecl_core/ecl_eigen/include/eigen3.1.2
   ../sophus
   ../ecl_core/ecl_devices/include
@@ -57,9 +61,10 @@ include_directories(include
   ../ecl_lite/ecl_config/include
   ../ecl_core/ecl_geometry/include
   ../kobuki_core/kobuki_driver/include
+  ../kobuki/kobuki_random_walker/include
 )
 
-set(${PROJECT_NAME}_SRCS
+set(${PROJECT_NAME}_node_SRCS
   ../ecl_core/ecl_devices/src/lib/serial_w32.cpp
   ../ecl_core/ecl_exceptions/src/lib/standard_exception.cpp
   ../ecl_core/ecl_geometry/src/lib/angle.cpp
@@ -81,7 +86,7 @@ set(${PROJECT_NAME}_SRCS
 
 add_executable(${PROJECT_NAME}_node 
   ../turtlebot2_demo/turtlebot2_drivers/src/kobuki_node.cpp
-  ${${PROJECT_NAME}_SRCS}
+  ${${PROJECT_NAME}_node_SRCS}
 )
 target_link_libraries(${PROJECT_NAME}_node 
   ${std_msgs_LIBRARIES}
@@ -93,10 +98,9 @@ target_link_libraries(${PROJECT_NAME}_node
   ${sensor_msgs_LIBRARIES}
   ${nav_msgs_LIBRARIES}
   ${geometry_msgs_LIBRARIES}
+  ${kobuki_msgs_LIBRARIES}
 )
 
-install(TARGETS ${PROJECT_NAME}_node
-  DESTINATION bin)
-
+install(TARGETS ${PROJECT_NAME}_node DESTINATION bin)
 ament_export_libraries(${PROJECT_NAME}_node)
 ament_package()
