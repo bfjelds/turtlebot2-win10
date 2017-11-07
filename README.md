@@ -2,6 +2,10 @@
 
 ## Introduction
 
+This enables a simple Turtlebot2 robot controlled by an Xbox 360 controller.
+
+For a simple autonomous robot that turns when it bumps into things, see [Avoid Obstacles](./AvoidObstacles.md)
+
 ## Requirements
 
 1. Visual Studio 2017
