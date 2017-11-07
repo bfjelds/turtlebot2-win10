@@ -19,9 +19,23 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(kobuki_msgs
   "../kobuki_msgs/msg/BumperEvent.msg"
+  "../kobuki_msgs/msg/ButtonEvent.msg"
   "../kobuki_msgs/msg/CliffEvent.msg"
-  "../kobuki_msgs/msg/WheelDropEvent.msg"
+#  "../kobuki_msgs/msg/ControllerInfo.msg"
+  "../kobuki_msgs/msg/DigitalInputEvent.msg"
+#  "../kobuki_msgs/msg/DigitalOutput.msg"
+#  "../kobuki_msgs/msg/DockInfraRed.msg"
+#  "../kobuki_msgs/msg/ExternalPower.msg"
+#  "../kobuki_msgs/msg/KeyboardInput.msg"
   "../kobuki_msgs/msg/Led.msg"
+#  "../kobuki_msgs/msg/MotorPower.msg"
+  "../kobuki_msgs/msg/PowerSystemEvent.msg"
+  "../kobuki_msgs/msg/RobotStateEvent.msg"
+#  "../kobuki_msgs/msg/ScanAngle.msg"
+#  "../kobuki_msgs/msg/SensorState.msg"
+#  "../kobuki_msgs/msg/Sound.msg"
+#  "../kobuki_msgs/msg/VersionInfo.msg"
+  "../kobuki_msgs/msg/WheelDropEvent.msg"
   DEPENDENCIES builtin_interfaces
 )
 
