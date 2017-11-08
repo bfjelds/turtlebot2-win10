@@ -74,7 +74,7 @@ instructions, `c:\dev\ros2`)
 1. Run the following commands to get the Turtlebot2 source code:
 
      ```
-     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/master/turtlebot2_win10.repos -o turtlebot2_win10.repos
+     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/turtlebot2_win10.repos -o turtlebot2_win10.repos
      vcs import src < turtlebot2_win10.repos
      ```
 1. Run the following command to build the Turtlebot2 binaries from a VS2015 x64 Native Tools Command Prompt (assuming 
