@@ -22,7 +22,11 @@ For a simple autonomous robot that turns when it bumps into things, see [Avoid O
 ### Important Notes
 
 ```
-To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake from:
+To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake.  The version of my MS compiler 
+is 1911. You can find your version by opening an 'x64 Native Tools Command Prompt for VS 2017' and running
+cl.exe (the output will contain the version as 19.xx.* which corresponds to 19xx).
+
+An easy solution is to change this line in OpenCVConfig.cmake from:
 
   elseif(MSVC_VERSION EQUAL 1910)
     set(OpenCV_RUNTIME vc15)
