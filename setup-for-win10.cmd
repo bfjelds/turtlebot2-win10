@@ -5,7 +5,7 @@ set ROS_PATH=%TURTLEBOT2_WIN10_PATH%..\ros
 set ROS2_PATH=%TURTLEBOT2_WIN10_PATH%..\ros2
 
 
-echo Modifying the AMENT_IGNORE in projects that Turtlebot2 doesn't need: %~0 %~1 %~2 
+echo Modifying the AMENT_IGNORE in projects that Turtlebot2 doesn't need: %~1"
 
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_core
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_lite
@@ -92,7 +92,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry\test
 
 
 
-exit /b 0
+goto:EOF
 
 
 rem
