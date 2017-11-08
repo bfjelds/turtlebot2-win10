@@ -25,18 +25,16 @@ For a simple autonomous robot that turns when it bumps into things, see [Avoid O
 [here](https://github.com/ros2/ros2/wiki/Windows-Development-Setup)
 
      ```
-     To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake.  The version of my MS compiler 
-     is 1911. You can find your version by opening an 'x64 Native Tools Command Prompt for VS 2017' and running
-     cl.exe (the output will contain the version as 19.xx.* which corresponds to 19xx).
-     
-     An easy solution is to change this line in OpenCVConfig.cmake from:
+     To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake.  The version in the ROS2 zip was
+     not up to date (see: https://github.com/opencv/opencv/blob/master/cmake/templates/OpenCVConfig.root-WIN32.cmake.in).
+     I had to change this line in OpenCVConfig.cmake from:
      
        elseif(MSVC_VERSION EQUAL 1910)
          set(OpenCV_RUNTIME vc15)
      
      to this:
      
-       else()
+       elseif(MSVC_VERSION MATCHES "^191[0-9]$")
          set(OpenCV_RUNTIME vc15)
      ```
      ```
