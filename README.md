@@ -19,9 +19,27 @@ For a simple autonomous robot that turns when it bumps into things, see [Avoid O
 1. Microsoft Xbox 360 Wireless Receiver for Windows
 
 ## Download and Build
+### Important Notes
 
 ```
-NOTE: to build this specifically for Window 10 IoT Core, I have changed the way CMAKE works so that
+To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake from:
+
+  elseif(MSVC_VERSION EQUAL 1910)
+    set(OpenCV_RUNTIME vc15)
+
+to this:
+
+  else()
+    set(OpenCV_RUNTIME vc15)
+
+
+To build debug binaries, follow the "Extra stuff for Debug mode" instructions found here 
+https://github.com/ros2/ros2/wiki/Windows-Development-Setup.  Then build using the following 
+command:
+
+     python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
+    
+(Optional) To build this specifically for Window 10 IoT Core, I have changed the way CMAKE works so that
 by default it only links to onecoreuap.lib.  This is not required because of the API forwarders.  To
 do this, change C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake 
 on the line below marked with ****
@@ -44,25 +62,6 @@ on the line below marked with ****
 	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib")
 	  endif()
 	
-
-Also, to use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake from:
-
-  elseif(MSVC_VERSION EQUAL 1910)
-    set(OpenCV_RUNTIME vc15)
-
-to this:
-
-  else()
-    set(OpenCV_RUNTIME vc15)
-
-
-To build debug binaries, follow the "Extra stuff for Debug mode" instructions found here 
-https://github.com/ros2/ros2/wiki/Windows-Development-Setup.  Then build using the following 
-command:
-
-     python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
-    
-     
 ```
 
 1. Using 'x64 Native Tools Command Prompt for VS **2017**' (not **2015**), follow setup instructions (up to, **BUT NOT INCLUDING**, Building the ROS 2 Code) for ROS2 found 
