@@ -27,13 +27,11 @@ rclcpp::publisher::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
-bool verbose_ = true;
+bool verbose_ = false;
 
 //
 // State
 //
-/// Flag for enabling gamepad control
-bool gamepad_control_;
 /// Flag for enabling self direction
 bool self_directed_;
 /// Flag for changing direction
@@ -434,8 +432,7 @@ static void handle_sensor_input()
 
 int main(int argc, char * argv[])
 {
-  gamepad_control_ = false;
-  self_directed_ = false;
+  self_directed_ = true;
 
   rclcpp::init(argc, argv);
 
