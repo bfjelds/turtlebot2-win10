@@ -8,14 +8,14 @@
 
   <Identity
     Name="GamepadNodeUwp"
-    Publisher="CN=bfjelds"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="360c3fab-fcb9-4573-93da-c739dc05cabd" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>GamepadNodeUwp</DisplayName>
-    <PublisherDisplayName>bfjelds</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
