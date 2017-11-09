@@ -9,6 +9,7 @@ find_package(rclcpp REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(kobuki_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -31,6 +32,7 @@ include_directories(include
   ${rcutils_INCLUDE_DIRS}
   ${geometry_msgs_INCLUDE_DIRS}
   ${kobuki_msgs_INCLUDE_DIRS}
+  ${sensor_msgs_INCLUDE_DIRS}
 )
 
 set(${PROJECT_NAME}_node_SRCS
@@ -46,6 +48,7 @@ target_link_libraries(${PROJECT_NAME}_node
   ${rcutils_LIBRARIES}
   ${geometry_msgs_LIBRARIES}
   ${kobuki_msgs_LIBRARIES}
+  ${sensor_msgs_LIBRARIES}
 )
 
 install(TARGETS ${PROJECT_NAME}_node DESTINATION bin)

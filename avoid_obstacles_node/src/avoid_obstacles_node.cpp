@@ -16,6 +16,8 @@
 #include <kobuki_msgs/msg/led.hpp>
 #include <kobuki_msgs/msg/wheel_drop_event.hpp>
 
+#include <sensor_msgs/msg/joy.hpp>
+
 #include <chrono>
 
 //
@@ -30,6 +32,10 @@ bool verbose_ = true;
 //
 // State
 //
+/// Flag for enabling gamepad control
+bool gamepad_control_;
+/// Flag for enabling self direction
+bool self_directed_;
 /// Flag for changing direction
 bool change_direction_;
 /// Flag for retreating
@@ -82,7 +88,9 @@ static void dumpCurrent()
   if (verbose_)
   {
     printf("\t**************************************** \r\n");
-    printf("\tbumpers on: left=%d middle=%d right=%d \r\n", bumper_left_pressed_, bumper_center_pressed_, bumper_right_pressed_);
+	printf("\tself-directed=%d \r\n", self_directed_);
+
+	printf("\tbumpers on: left=%d middle=%d right=%d \r\n", bumper_left_pressed_, bumper_center_pressed_, bumper_right_pressed_);
     printf("\tcliff found: left=%d middle=%d right=%d \r\n", cliff_left_detected_, cliff_center_detected_, cliff_right_detected_);
     printf("\tdrop found: left=%d right=%d \r\n", wheel_drop_left_detected_, wheel_drop_right_detected_);
 
@@ -93,6 +101,20 @@ static void dumpCurrent()
   }
 }
 
+const static uint16_t SELF_DIRECTED_ON = 0;
+const static uint16_t SELF_DIRECTED_OFF = 1;
+const static uint16_t GAMEPAD_ON = 5;
+static void joyCallback(const sensor_msgs::msg::Joy::ConstSharedPtr joy_msg)
+{
+	auto button_count = joy_msg->buttons.size();
+	if (verbose_) printf("joyCallback %d \r\n", button_count);
+
+	if (button_count > SELF_DIRECTED_ON && joy_msg->buttons[SELF_DIRECTED_ON] > 0) self_directed_ = true;
+	if (button_count > SELF_DIRECTED_OFF && joy_msg->buttons[SELF_DIRECTED_OFF] > 0) self_directed_ = false;
+	if (button_count > GAMEPAD_ON && joy_msg->buttons[GAMEPAD_ON] > 0) self_directed_ = false;
+
+	dumpCurrent();
+}
 
 static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr msg)
 {
@@ -297,6 +319,7 @@ static void handle_sensor_input()
     dumpCurrent();
   }
 
+  if (self_directed_)
   {
     // Velocity commands
     geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
@@ -411,6 +434,9 @@ static void handle_sensor_input()
 
 int main(int argc, char * argv[])
 {
+  gamepad_control_ = false;
+  self_directed_ = false;
+
   rclcpp::init(argc, argv);
 
   vel_lin_ = 0.1;
@@ -431,6 +457,8 @@ int main(int argc, char * argv[])
     "events/cliff", cliffCallback, rmw_qos_profile_sensor_data);
   auto drop_sub = node->create_subscription<kobuki_msgs::msg::WheelDropEvent>(
     "events/drop", dropCallback, rmw_qos_profile_sensor_data);
+  auto joy_sub = node->create_subscription<sensor_msgs::msg::Joy>(
+    "joy", joyCallback, rmw_qos_profile_sensor_data);
 
   rclcpp::WallRate loop_rate(20);
   while (rclcpp::ok()) {

@@ -123,7 +123,12 @@ development folder of `c:\dev\ros2`):
     to the Apps tab and deploy your APPX.
 
     1. From SSH.  Copy your APPX, dependency APPXs, and CER files.  Use the deployappx tool to install.
+    
+    1. Once installed, enable GamepadNodeUwp to communicate with other ROS2 nodes:
 
+        ```
+         schtasks /create /tn MyTask /f /sc onstart /ru system /tr "checknetisolation LoopbackExempt -is -n=GamepadNodeUwp_55b230cc6y9ay"
+        ```
 1. Create C:\data\ROS2 on your MBM
 
 1. Copy contents of `c:\dev\ros2`\install to your MBM's C:\data\ROS2

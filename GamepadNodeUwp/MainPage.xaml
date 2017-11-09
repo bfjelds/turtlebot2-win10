@@ -8,7 +8,12 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center">TurtleBot2 for UWP</TextBlock>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock FontSize="48" HorizontalAlignment="Center">TurtleBot2 for UWP</TextBlock>
+            <TextBlock FontSize="32" HorizontalAlignment="Center">Press left or right shoulder buttons to control with Xbox gamepad.</TextBlock>
+            <TextBlock FontSize="32" HorizontalAlignment="Center">Press A button to enable self-direction.</TextBlock>
+            <TextBlock FontSize="32" HorizontalAlignment="Center">Press B button to disable self-direction.</TextBlock>
+        </StackPanel>
         <TextBlock MinWidth="400" MinHeight="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" x:Name="status" />
     </Grid>
 </Page>

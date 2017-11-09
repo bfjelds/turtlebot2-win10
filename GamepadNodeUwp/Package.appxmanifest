@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="360c3fab-fcb9-4573-93da-c739dc05cabd"
+    Name="GamepadNodeUwp"
     Publisher="CN=bfjelds"
     Version="1.0.0.0" />
 
