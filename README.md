@@ -139,6 +139,7 @@ development folder of `c:\dev\ros2`):
      set Path=c:\data\ros2\Scripts;c:\data\ros2\bin;%path%
      start C:\data\ros2\bin\kobuki_node.exe
      start C:\Data\ros2\Lib\teleop_twist_joy\teleop_node.exe
+     start C:\Data\ros2\bin\avoid_obstacles_node.exe
      ```
 1. Create the following task on your MBM using SSH:
 
