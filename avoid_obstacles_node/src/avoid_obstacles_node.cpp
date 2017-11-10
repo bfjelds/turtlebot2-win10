@@ -150,6 +150,8 @@ static void joyCallback(const sensor_msgs::msg::Joy::ConstSharedPtr joy_msg)
   {
     geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
     cmd_vel_msg_ptr.reset(new geometry_msgs::msg::Twist());
+    cmd_vel_msg_ptr->linear.x = 0;
+    cmd_vel_msg_ptr->angular.z = 0;
     if (verbose_) printf("\t not self-directed anymore, stopping ... \r\n");
     vel_pub->publish(cmd_vel_msg_ptr); // will be all zero when initialised
     initState(self_directed_);
@@ -376,6 +378,8 @@ static void handle_sensor_input()
     if (stop_)
     {
       if (verbose_) printf("\t stopping ... \r\n");
+      cmd_vel_msg_ptr->linear.x = 0;
+      cmd_vel_msg_ptr->angular.z = 0;
       vel_pub->publish(cmd_vel_msg_ptr); // will be all zero when initialised
       if (verbose_) printf("\t stopped ... \r\n");
       return;
@@ -402,8 +406,9 @@ static void handle_sensor_input()
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
       if (self_directed_ && (now <= (retreating_start_ + retreating_duration_)))
       {
+        cmd_vel_msg_ptr->angular.z = 0;
         cmd_vel_msg_ptr->linear.x = -1 * vel_lin_;
-        if (verbose_) printf("\t retreating (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
+        if (verbose_) printf("\t retreating (%f, %f) ... \r\n", cmd_vel_msg_ptr->linear.x, cmd_vel_msg_ptr->angular.z);
         vel_pub->publish(cmd_vel_msg_ptr);
         return;
       }
@@ -463,8 +468,9 @@ static void handle_sensor_input()
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
       if (self_directed_ && (now <= (turning_start_+ turning_duration_)))
       {
+        cmd_vel_msg_ptr->linear.x = 0;
         cmd_vel_msg_ptr->angular.z = turning_direction_ * vel_ang_;
-        if (verbose_) printf("\t turning (%f) [now - start = %f] ... \r\n", cmd_vel_msg_ptr->angular.z, (now - turning_start_).count());
+        if (verbose_) printf("\t turning (%f, %f) [now - start = %f] ... \r\n", cmd_vel_msg_ptr->linear.x, cmd_vel_msg_ptr->angular.z, (now - turning_start_).count());
         vel_pub->publish(cmd_vel_msg_ptr);
       }
       else
@@ -475,9 +481,17 @@ static void handle_sensor_input()
     }
     else if (self_directed_)
     {
+      cmd_vel_msg_ptr->angular.z = 0;
       cmd_vel_msg_ptr->linear.x = vel_lin_;
-      if (verbose_) printf("\t moving (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
+      if (verbose_) printf("\t moving (%f, %f) ... \r\n", cmd_vel_msg_ptr->linear.x, cmd_vel_msg_ptr->angular.z);
       vel_pub->publish(cmd_vel_msg_ptr);
+    }
+    else
+    {
+        cmd_vel_msg_ptr->angular.z = 0;
+        cmd_vel_msg_ptr->linear.x = 0;
+        if (verbose_) printf("\t not sure what to do ... stopping (%f, %f) ... \r\n", cmd_vel_msg_ptr->linear.x, cmd_vel_msg_ptr->angular.z);
+        vel_pub->publish(cmd_vel_msg_ptr);
     }
   }
   if (verbose_) printf("handle_sensor_input done\r\n");
