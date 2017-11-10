@@ -3,9 +3,10 @@
 
 ## Introduction
 
-This enables a simple Turtlebot2 robot controlled by an Xbox 360 controller.
-
-For a simple autonomous robot that turns when it bumps into things, see [Avoid Obstacles](./AvoidObstacles.md)
+This enables a simple Turtlebot2 robot that will autonomously go forward, bump, turn left, and repeat. By
+connecting an Xbox 360 controller, the robot can be manually controlled by holding down the shoulder buttons.
+Autonomous control can be toggled by clicking the A button (to enable robot autonomy) and the B button to
+disable robot autonomy)
 
 ## Requirements
 
@@ -123,7 +124,7 @@ development folder of `c:\dev\ros2`):
     to the Apps tab and deploy your APPX.
 
     1. From SSH.  Copy your APPX, dependency APPXs, and CER files.  Use the deployappx tool to install.
-
+    
 1. Create C:\data\ROS2 on your MBM
 
 1. Copy contents of `c:\dev\ros2`\install to your MBM's C:\data\ROS2
@@ -134,20 +135,19 @@ development folder of `c:\dev\ros2`):
      set Path=c:\data\ros2\Scripts;c:\data\ros2\bin;%path%
      start C:\data\ros2\bin\kobuki_node.exe
      start C:\Data\ros2\Lib\teleop_twist_joy\teleop_node.exe
+     start C:\Data\ros2\bin\avoid_obstacles_node.exe
      ```
-1. Create the following task on your MBM using SSH:
+1. Configure your device to allow GamepadNodeUwp to communicate with other ROS2 nodes by creating the following task 
+on your MBM using SSH:
 
      ```
-     schtasks /create /tn Turtlebot2 /f /sc onstart /ru system /tr "C:\Data\ros2\turtlebot2.bat"
+     CheckNetIsolation.exe LoopbackExempt -a -n=GamepadNodeUwp_1w720vyc4ccym
+     schtasks /create /tn EnableRosCommunication /f /sc onstart /ru system /tr "checknetisolation LoopbackExempt -is -n=GamepadNodeUwp_1w720vyc4ccym!App"
      ```
 1. Configure GamepadNodeUwp to be the startup app on your MBM by using SSH:
 
      ```
-     iotstartup add headed GamepadNodeUwp
+     iotstartup add headed GamepadNodeUwp_1w720vyc4ccym!App
      ```
-1. The UWP Gamepad app requires a valid network connection to communicate with the other nodes.
-If you create a set of nodes that don't involve UWP, you can enable loopback without a network
-connection by following [these steps](./NoNetwork.md)
-
 1. Restart device.
 
