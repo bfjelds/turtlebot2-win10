@@ -141,11 +141,13 @@ development folder of `c:\dev\ros2`):
 on your MBM using SSH:
 
      ```
-     schtasks /create /tn Turtlebot2 /f /sc onstart /ru system /tr "C:\Data\ros2\turtlebot2.bat"
+     CheckNetIsolation.exe LoopbackExempt -a -n=GamepadNodeUwp_1w720vyc4ccym
+     schtasks /create /tn EnableRosCommunication /f /sc onstart /ru system /tr "checknetisolation LoopbackExempt -is -n=GamepadNodeUwp_1w720vyc4ccym!App"
      ```
 1. Configure GamepadNodeUwp to be the startup app on your MBM by using SSH:
 
      ```
      iotstartup add headed GamepadNodeUwp_1w720vyc4ccym!App
+     ```
 1. Restart device.
 

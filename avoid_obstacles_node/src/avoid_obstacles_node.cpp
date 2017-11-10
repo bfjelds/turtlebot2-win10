@@ -20,6 +20,7 @@
 
 #include <chrono>
 
+rclcpp::Node::SharedPtr node;
 //
 // Publishers
 //
@@ -28,6 +29,8 @@ rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
 rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
 bool verbose_ = false;
+bool callbackverbose_ = false;
+bool dumpStateverbose_ = false;
 
 //
 // State
@@ -81,14 +84,42 @@ std::chrono::duration<double> turning_start_;
 /// Flag for turning state
 bool turning_;
 
+static void initState(bool self_directed)
+{
+  self_directed_ = self_directed;
+  change_direction_ = false;
+  retreat_ = false;
+  retreating_ = false;
+  retreating_start_ = std::chrono::duration<double>();
+  retreating_duration_ = std::chrono::duration<double>();
+  stop_ = false;
+  bumper_left_pressed_ = false;
+  bumper_center_pressed_ = false;
+  bumper_right_pressed_ = false;
+  cliff_left_detected_ = false;
+  cliff_center_detected_ = false;
+  cliff_right_detected_ = false;
+  wheel_drop_left_detected_ = false;
+  wheel_drop_right_detected_ = false;
+  led_bumper_on_ = false;
+  led_cliff_on_ = false;
+  led_wheel_drop_on_ = false;
+  vel_lin_ = 0.1;
+  vel_ang_ = 0.5;
+  turning_duration_ = std::chrono::duration<double>();;
+  turning_direction_ = false;
+  turning_start_ = std::chrono::duration<double>();;
+  turning_ = false;
+}
+
 static void dumpCurrent()
 {
-  if (verbose_)
+  if (dumpStateverbose_)
   {
     printf("\t**************************************** \r\n");
-	printf("\tself-directed=%d \r\n", self_directed_);
+    printf("\tself-directed=%d \r\n", self_directed_);
 
-	printf("\tbumpers on: left=%d middle=%d right=%d \r\n", bumper_left_pressed_, bumper_center_pressed_, bumper_right_pressed_);
+    printf("\tbumpers on: left=%d middle=%d right=%d \r\n", bumper_left_pressed_, bumper_center_pressed_, bumper_right_pressed_);
     printf("\tcliff found: left=%d middle=%d right=%d \r\n", cliff_left_detected_, cliff_center_detected_, cliff_right_detected_);
     printf("\tdrop found: left=%d right=%d \r\n", wheel_drop_left_detected_, wheel_drop_right_detected_);
 
@@ -104,19 +135,32 @@ const static uint16_t SELF_DIRECTED_OFF = 1;
 const static uint16_t GAMEPAD_ON = 5;
 static void joyCallback(const sensor_msgs::msg::Joy::ConstSharedPtr joy_msg)
 {
-	auto button_count = joy_msg->buttons.size();
-	if (verbose_) printf("joyCallback %d \r\n", button_count);
+  auto previously_self_directed = self_directed_;
+  auto button_count = joy_msg->buttons.size();
+  if (callbackverbose_ || verbose_) printf("joyCallback self-directed=%d gamepad-directed=%d gamepad-now=%d \r\n", 
+    (button_count > SELF_DIRECTED_ON) ? (joy_msg->buttons[SELF_DIRECTED_ON] > 0) : false,
+    (button_count > SELF_DIRECTED_OFF) ? (joy_msg->buttons[SELF_DIRECTED_OFF] > 0) : false,
+    (button_count > GAMEPAD_ON) ? (joy_msg->buttons[GAMEPAD_ON] > 0) : false);
 
-	if (button_count > SELF_DIRECTED_ON && joy_msg->buttons[SELF_DIRECTED_ON] > 0) self_directed_ = true;
-	if (button_count > SELF_DIRECTED_OFF && joy_msg->buttons[SELF_DIRECTED_OFF] > 0) self_directed_ = false;
-	if (button_count > GAMEPAD_ON && joy_msg->buttons[GAMEPAD_ON] > 0) self_directed_ = false;
+  if (button_count > SELF_DIRECTED_ON && joy_msg->buttons[SELF_DIRECTED_ON] > 0) self_directed_ = true;
+  if (button_count > SELF_DIRECTED_OFF && joy_msg->buttons[SELF_DIRECTED_OFF] > 0) self_directed_ = false;
+  if (button_count > GAMEPAD_ON && joy_msg->buttons[GAMEPAD_ON] > 0) self_directed_ = false;
 
-	dumpCurrent();
+  if (previously_self_directed != self_directed_)
+  {
+    geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
+    cmd_vel_msg_ptr.reset(new geometry_msgs::msg::Twist());
+    if (verbose_) printf("\t not self-directed anymore, stopping ... \r\n");
+    vel_pub->publish(cmd_vel_msg_ptr); // will be all zero when initialised
+    initState(self_directed_);
+  }
+
+  dumpCurrent();
 }
 
 static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr msg)
 {
-  if (verbose_) printf("bumperCallback %d \r\n", msg->bumper);
+  if (callbackverbose_ || verbose_) printf("bumperCallback %d \r\n", msg->bumper);
 
   if (msg->state == kobuki_msgs::msg::BumperEvent::PRESSED && !change_direction_)
   {
@@ -182,7 +226,7 @@ static void bumperCallback(const kobuki_msgs::msg::BumperEvent::ConstSharedPtr m
 
 static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg)
 {
-  if (verbose_) printf("cliffCallback %d \r\n", msg->sensor);
+  if (callbackverbose_ || verbose_) printf("cliffCallback %d \r\n", msg->sensor);
 
   if (msg->state == kobuki_msgs::msg::CliffEvent::CLIFF && !change_direction_)
   {
@@ -240,7 +284,7 @@ static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg
   }
   if (change_direction_)
   {
-    //ROS_INFO_STREAM("Cliff detected. Changing direction. [" << name_ << "]");
+    retreat_ = true;
   }
 
   dumpCurrent();
@@ -248,7 +292,7 @@ static void cliffCallback(const kobuki_msgs::msg::CliffEvent::ConstSharedPtr msg
 
 static void dropCallback(const kobuki_msgs::msg::WheelDropEvent::ConstSharedPtr msg)
 {
-  if (verbose_) printf("dropCallback %d \r\n", msg->wheel);
+  if (callbackverbose_ || verbose_) printf("dropCallback %d \r\n", msg->wheel);
 
   if (msg->state == kobuki_msgs::msg::WheelDropEvent::DROPPED && !stop_)
   {
@@ -300,7 +344,7 @@ static void dropCallback(const kobuki_msgs::msg::WheelDropEvent::ConstSharedPtr 
   }
   if (change_direction_)
   {
-    //ROS_INFO_STREAM("Wheel(s) dropped. Stopping. [" << name_ << "]");
+    retreat_ = true;
   }
 
   dumpCurrent();
@@ -313,57 +357,66 @@ static void handle_sensor_input()
   //
   if (verbose_)
   {
-    printf("\t handle_sensor_input ... \r\n");
+    printf("handle_sensor_input start ... \r\n");
     dumpCurrent();
   }
 
-  if (self_directed_)
+  if (!self_directed_)
   {
+    if (verbose_) printf("\t NOT self-directed \r\n");
+  }
+  else
+  {
+    if (verbose_) printf("\t AM self-directed ... \r\n");
+    
     // Velocity commands
     geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg_ptr;
     cmd_vel_msg_ptr.reset(new geometry_msgs::msg::Twist());
 
     if (stop_)
     {
+      if (verbose_) printf("\t stopping ... \r\n");
       vel_pub->publish(cmd_vel_msg_ptr); // will be all zero when initialised
+      if (verbose_) printf("\t stopped ... \r\n");
       return;
     }
 
-    if (retreat_)
+    if (retreat_ && self_directed_)
     {
       retreat_ = false;
 
       std::chrono::high_resolution_clock clock;
       retreating_start_ =
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
-      retreating_duration_ = std::chrono::milliseconds(500);
+      retreating_duration_ = std::chrono::seconds(1);
+      if (verbose_) printf("\t starting retreat ... \r\n");
       retreating_ = true;
     }
 
-    if (retreating_)
+    if (retreating_ && self_directed_)
     {
       retreat_ = false;
 
       std::chrono::high_resolution_clock clock;
       std::chrono::duration<double> now =
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
-      if (now <= (retreating_start_ + retreating_duration_))
+      if (self_directed_ && (now <= (retreating_start_ + retreating_duration_)))
       {
         cmd_vel_msg_ptr->linear.x = -1 * vel_lin_;
-        if (verbose_) printf("retreating (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
+        if (verbose_) printf("\t retreating (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
         vel_pub->publish(cmd_vel_msg_ptr);
-
         return;
       }
       else
       {
-        if (verbose_) printf("done retreating\r\n");
+        if (verbose_) printf("\t done retreating\r\n");
         retreating_ = false;
       }
     }
 
-    if (change_direction_)
+    if (change_direction_ && self_directed_)
     {
+      if (verbose_) printf("\t changing direction ...\r\n");
       change_direction_ = false;
 
 #ifdef RANDOMLY_TURN
@@ -399,47 +452,77 @@ static void handle_sensor_input()
       std::chrono::high_resolution_clock clock;
       turning_start_ =
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
-      if (verbose_) printf("turn starting %f ... \r\n", turning_start_.count());
+      if (verbose_) printf("\t turn starting %f ... \r\n", turning_start_.count());
       turning_ = true;
     }
 
-    if (turning_)
+    if (turning_ && self_directed_)
     {
       std::chrono::high_resolution_clock clock;
       std::chrono::duration<double> now =
         std::chrono::duration_cast<std::chrono::seconds>(clock.now().time_since_epoch());
-      if (now <= (turning_start_+ turning_duration_))
+      if (self_directed_ && (now <= (turning_start_+ turning_duration_)))
       {
         cmd_vel_msg_ptr->angular.z = turning_direction_ * vel_ang_;
-        if (verbose_) printf("turning (%f) [now - start = %f] ... \r\n", cmd_vel_msg_ptr->angular.z, (now - turning_start_).count());
+        if (verbose_) printf("\t turning (%f) [now - start = %f] ... \r\n", cmd_vel_msg_ptr->angular.z, (now - turning_start_).count());
         vel_pub->publish(cmd_vel_msg_ptr);
       }
       else
       {
-        if (verbose_) printf("done turning \r\n");
+        if (verbose_) printf("\t done turning \r\n");
         turning_ = false;
       }
     }
-    else
+    else if (self_directed_)
     {
       cmd_vel_msg_ptr->linear.x = vel_lin_;
-      if (verbose_) printf("moving (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
+      if (verbose_) printf("\t moving (%f) ... \r\n", cmd_vel_msg_ptr->linear.x);
       vel_pub->publish(cmd_vel_msg_ptr);
     }
   }
+  if (verbose_) printf("handle_sensor_input done\r\n");
 };
 
+static void motionHandler()
+{
+  printf("Motion thread ... \r\n");
+
+  long long iteration = 0;
+  while (true) {
+
+    printf("Motion control loop iteration %lld \r\n", iteration++);
+
+    handle_sensor_input();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+  }
+}
+
+static void ros2ListenerHandler()
+{
+  printf("ROS2 Listener thread ... \r\n");
+
+  rclcpp::WallRate loop_rate(200);
+  long long iteration = 0;
+  while (rclcpp::ok()) {
+
+    printf("ROS2 listener loop iteration %lld \r\n", iteration++);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+
+  }
+
+
+}
 
 int main(int argc, char * argv[])
 {
-  self_directed_ = true;
+  initState(true);
 
   rclcpp::init(argc, argv);
 
-  vel_lin_ = 0.1;
-  vel_ang_ = 0.5;
-
-  auto node = std::make_shared<rclcpp::Node>("avoid_obstacles_node");
+  node = std::make_shared<rclcpp::Node>("avoid_obstacles_node");
   vel_pub = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel",
     rmw_qos_profile_sensor_data);
   led1_pub = node->create_publisher<kobuki_msgs::msg::Led>("commands/led1",
@@ -457,14 +540,10 @@ int main(int argc, char * argv[])
   auto joy_sub = node->create_subscription<sensor_msgs::msg::Joy>(
     "joy", joyCallback, rmw_qos_profile_sensor_data);
 
-  rclcpp::WallRate loop_rate(20);
-  while (rclcpp::ok()) {
-
-    rclcpp::spin_some(node);
-    handle_sensor_input();
-    loop_rate.sleep();
-
-  }
+  std::thread rosListenerThread(ros2ListenerHandler);
+  std::thread motionThread(motionHandler);
+  rosListenerThread.join();
+  motionThread.join();
 
   return 0;
 }
