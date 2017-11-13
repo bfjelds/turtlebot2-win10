@@ -88,7 +88,9 @@ development folder of `c:\dev\ros2`):
 
      ```
      C:\dev\ros2\install\lib\teleop_twist_joy\teleop_node.exe
-     C:\dev\ros2\bin\kobuki_node.exe
+     C:\dev\ros2\install\bin\teleop_twist_joy.dll
+     C:\dev\ros2\install\bin\kobuki_node.exe
+     C:\dev\ros2\install\bin\avoid_obstacles_node.exe
      GamepadNodeUwp.appx
      ```
      
