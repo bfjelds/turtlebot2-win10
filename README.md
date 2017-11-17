@@ -72,6 +72,10 @@ disable robot autonomy)
 1. Navigate to the development folder you set up in the first step (we will assume, as ROS2 suggests in their 
 instructions, `c:\dev\ros2`)
 
+1. To enable map_server, you will need to download [SDL](https://www.libsdl.org/download-1.2.php) and 
+[SDL_Image](https://www.libsdl.org/projects/SDL_image/release-1.2.html). Once this is done, set the following
+environment variables to point at the respective install directories: SDLDIR and SDLIMAGEDIR.
+
 1. Run the following commands to get the Turtlebot2 source code:
 
      ```
