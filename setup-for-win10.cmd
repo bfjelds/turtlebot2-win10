@@ -3,24 +3,32 @@
 set TURTLEBOT2_WIN10_PATH=%~dp0
 set ROS_PATH=%TURTLEBOT2_WIN10_PATH%..\ros
 set ROS2_PATH=%TURTLEBOT2_WIN10_PATH%..\ros2
+set ADV_PATH=%TURTLEBOT2_WIN10_PATH%..\advanced-win10
 
 
-echo Modifying the AMENT_IGNORE in projects that Turtlebot2 doesn't need: %~1"
+echo Modifying the AMENT_IGNORE in projects that Turtlebot2 doesn't need: ARG1="%~1" ARG2="%~2"
+echo   ARG1, specify "filter" to add AMENT_IGNORE
+echo   ARG1, specify "reset" to remove AMENT_IGNORE
+echo   ARG2, specify "turtlebot2" to configure only TURTLEBOT2 nodes (kobuki, etc)
+echo   ARG2, specify "advanced" to configure TURTLEBOT2 and ADVANCED nodes (laser_filters, etc)
 
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_core
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_lite
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_navigation
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_core
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_msgs
 call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\sophus
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\navigation\amcl
+call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\geometry2\tf2_eigen
 
+if "%~2" == "turtlebot2" (
 call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\class_loader
-rem call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\console_bridge
+call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\console_bridge
+)
 
+if "%~2" == "turtlebot2" (
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\poco_vendor
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\actionlib_msgs
+)
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\diagnostic_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\shape_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\std_srvs
@@ -48,10 +56,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_service
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_subscriber
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_timer
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\example_interfaces
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\geometry2
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\test_tf2
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\tf2_eigen
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2\tf2_geometry_msgs
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\doc
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\examples
@@ -92,59 +97,8 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry\test
 
 
-
 goto:EOF
 
-
-rem
-rem Other projects to consider ignoring...
-rem
-call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\console_bridge
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl\rcl
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl\rcl\test
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl\rcl\test\memory_tools
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl\rcl_lifecycle
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rclcpp\rclcpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rclcpp\rclcpp_lifecycle
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rclpy\rclpy
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl_interfaces\lifecycle_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl_interfaces\rcl_interfaces
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcl_interfaces\test_msgs
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcutils
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rcutils\test\memory_tools
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw\rmw
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw\rmw\test
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw\rmw_implementation_cmake
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\connext_cmake_module
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\rmw_connext_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\rmw_connext_dynamic_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\rmw_connext_shared_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\rosidl_typesupport_connext_c
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_connext\rosidl_typesupport_connext_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_fastrtps\fastrtps_cmake_module
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_fastrtps\rmw_fastrtps_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_implementation\rmw_implementation
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_opensplice\opensplice_cmake_module
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_opensplice\rmw_opensplice_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_opensplice\rosidl_typesupport_opensplice_c
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rmw_opensplice\rosidl_typesupport_opensplice_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros1_bridge
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\python_cmake_module
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_cmake
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_generator_c
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_generator_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_generator_py
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_parser
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_typesupport_interface
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_typesupport_introspection_c
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl\rosidl_typesupport_introspection_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl_dds\rosidl_generator_dds_idl
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl_typesupport\rosidl_default_generators
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl_typesupport\rosidl_default_runtime
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl_typesupport\rosidl_typesupport_c
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rosidl_typesupport\rosidl_typesupport_cpp
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\tinyxml_vendor
-call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\tlsf\tlsf
 
 
 :AddOrRemoveAmentIgnore 

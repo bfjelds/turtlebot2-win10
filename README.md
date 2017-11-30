@@ -82,13 +82,19 @@ environment variables to point at the respective install directories: SDLDIR and
      curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/turtlebot2_win10.repos -o turtlebot2_win10.repos
      vcs import src < turtlebot2_win10.repos
      ```
-1. Run the following command to build the Turtlebot2 binaries from a VS2015 x64 Native Tools Command Prompt (assuming 
-development folder of `c:\dev\ros2`):
+1. Run the following commands to get additional advanced source code:
 
      ```
-     C:\dev\ros2\src\turtlebot2-win10\build.cmd
+     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/advanced_win10.repos -o advanced_win10.repos
+     vcs import src < advanced_win10.repos
      ```
-1. Validate that the following files exist (assuming development folder of `c:\dev\ros2`):
+1. Run the following command to build the Turtlebot2 + advanced binaries from a VS2017 x64 Native Tools Command Prompt (assuming 
+development folder of `c:\dev\ros2`).  To just build the Turtlebot2 binaries, omit "advanced" from the following command:
+
+     ```
+     C:\dev\ros2\src\turtlebot2-win10\build.cmd advanced
+     ```
+1. For Turtlebot2, validate that the following files exist (assuming development folder of `c:\dev\ros2`):
 
      ```
      C:\dev\ros2\install\lib\teleop_twist_joy\teleop_node.exe

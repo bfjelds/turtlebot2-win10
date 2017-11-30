@@ -9,8 +9,14 @@ pushd %ROOT_PATH%
 echo .
 echo Configure the build to skip AMENT projects that aren't relevant
 echo .
-call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter 
+if "%~1" == "advanced" (
+call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter advanced
+goto:NextStep
+)
+call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter turtlebot2
 
+
+:NextStep
 
 echo .
 echo Build ROS2 binaries for Windows 10 Iot Core

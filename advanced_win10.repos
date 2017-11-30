@@ -1,0 +1,33 @@
+repositories:
+  advanced-win10/roscpp_core:
+    type: git
+    url: https://github.com/bfjelds/roscpp_core.git
+    version: win10
+  advanced-win10/ros_comm:
+    type: git
+    url: https://github.com/bfjelds/ros_comm.git
+    version: win10
+  advanced-win10/angles:
+    type: git
+    url: https://github.com/bfjelds/angles.git
+    version: win10
+  advanced-win10/filters:
+    type: git
+    url: https://github.com/bfjelds/filters.git
+    version: win10
+  advanced-win10/laser_geometry:
+    type: git
+    url: https://github.com/bfjelds/laser_geometry.git
+    version: win10
+  advanced-win10/laser_filters:
+    type: git
+    url: https://github.com/bfjelds/laser_filters.git
+    version: win10
+  advanced-win10/yaml-cpp:
+    type: git
+    url: https://github.com/bfjelds/yaml-cpp.git
+    version: win10
+  advanced-win10/navigation:
+    type: git
+    url: https://github.com/bfjelds/navigation.git
+    version: win10

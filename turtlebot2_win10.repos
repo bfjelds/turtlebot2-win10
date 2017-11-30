@@ -1,4 +1,8 @@
 repositories:
+  turtlebot2-win10/geometry2:
+    type: git
+    url: https://github.com/bfjelds/geometry2.git
+    version: win10
   turtlebot2-win10/turtlebot2_demo:
     type: git
     url: https://github.com/bfjelds/turtlebot2_demo.git
@@ -35,14 +39,6 @@ repositories:
     type: git
     url: https://github.com/ooeygui/teleop_twist_joy
     version: ros2
-  turtlebot2-win10/yaml-cpp:
-    type: git
-    url: https://github.com/bfjelds/yaml-cpp.git
-    version: win10
-  turtlebot2-win10/navigation:
-    type: git
-    url: https://github.com/bfjelds/navigation.git
-    version: win10
   turtlebot2-win10:
     type: git
     url: https://github.com/bfjelds/turtlebot2-win10.git
