@@ -31,7 +31,9 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\actionlib_msgs
 )
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\diagnostic_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\shape_msgs
+if "%~2" == "turtlebot2" (
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\std_srvs
+)
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\stereo_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\trajectory_msgs
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\common_interfaces\visualization_msgs

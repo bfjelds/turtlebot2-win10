@@ -31,3 +31,7 @@ repositories:
     type: git
     url: https://github.com/bfjelds/navigation.git
     version: win10
+  advanced-win10/rplidar_ros:
+    type: git
+    url: https://github.com/bfjelds/rplidar_ros.git
+    version: win10
