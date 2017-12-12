@@ -24,9 +24,9 @@ rclcpp::Node::SharedPtr node;
 //
 // Publishers
 //
-rclcpp::publisher::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
-rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
-rclcpp::publisher::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
+rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub;
+rclcpp::Publisher<kobuki_msgs::msg::Led>::SharedPtr led1_pub;
+rclcpp::Publisher<kobuki_msgs::msg::Led>::SharedPtr led2_pub;
 
 bool verbose_ = false;
 bool callbackverbose_ = false;
