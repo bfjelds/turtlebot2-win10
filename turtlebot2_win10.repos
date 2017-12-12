@@ -37,8 +37,8 @@ repositories:
     version: devel
   turtlebot2-win10/teleop_twist_joy:
     type: git
-    url: https://github.com/ooeygui/teleop_twist_joy
-    version: ros2
+    url: https://github.com/bfjelds/teleop_twist_joy
+    version: win10
   turtlebot2-win10:
     type: git
     url: https://github.com/bfjelds/turtlebot2-win10.git
