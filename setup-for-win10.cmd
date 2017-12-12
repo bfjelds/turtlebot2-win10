@@ -59,6 +59,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_subscriber
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\examples\rclcpp\minimal_timer
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\example_interfaces
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\geometry2
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\kdl_parser
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\doc
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\orocos_kinematics_dynamics\orocos_kdl\examples
@@ -78,10 +79,12 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2node
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2pkg
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2run
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\ros2cli\ros2srv
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\rviz
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\sros2
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\system_tests\test_communication
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\system_tests\test_rclcpp
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\tlsf\tlsf
+call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\urdf
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\urdfdom
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\urdfdom\urdf_parser
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\urdfdom\urdf_parser\test
@@ -97,6 +100,7 @@ call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\cv_bridge\src
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\cv_bridge\test
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry
 call:AddOrRemoveAmentIgnore %~1 %ROS2_PATH%\vision_opencv\image_geometry\test
+
 
 
 goto:EOF
