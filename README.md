@@ -26,6 +26,36 @@ disable robot autonomy)
 [here](https://github.com/ros2/ros2/wiki/Windows-Development-Setup)
 
      ```
+     To build debug binaries, follow the "Extra stuff for Debug mode" instructions found here 
+     https://github.com/ros2/ros2/wiki/Windows-Development-Setup.  Then build using the following 
+     command:
+     
+          python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
+     ```
+     ```
+     To build pluginlib, a small change is needed to accomodate Visual Studio's version of the std
+     libraries.  You'll need to change src\ros\pluginlib\include\pluginlib\impl\filesystem_helper.hpp 
+     from:
+     
+          #if defined(__has_include)
+     to this:
+ 
+          #if defined(_MSC_VER)
+          #include <experimental/filesystem> // C++-standard header file name  
+          #include <filesystem> // Microsoft-specific implementation header file name  
+          namespace pluginlib
+          {
+          namespace impl
+          {
+          namespace fs = std::experimental::filesystem;
+          }  // namespace impl
+          }  // namespace pluginlib
+          
+          #define PLUGINLIB__IMPL__FILESYSYEM_HELPER__HAS_STD_FILESYSTEM
+          
+          #elif defined(__has_include)
+     ```
+     ```
      To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake.  The version in the ROS2 zip was
      not up to date (see: https://github.com/opencv/opencv/blob/master/cmake/templates/OpenCVConfig.root-WIN32.cmake.in).
      I had to change this line in OpenCVConfig.cmake from:
@@ -39,35 +69,28 @@ disable robot autonomy)
          set(OpenCV_RUNTIME vc15)
      ```
      ```
-     To build debug binaries, follow the "Extra stuff for Debug mode" instructions found here 
-     https://github.com/ros2/ros2/wiki/Windows-Development-Setup.  Then build using the following 
-     command:
-     
-          python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
-     ```
-     ```
      (Optionally) To build this specifically for Window 10 IoT Core, I have changed the way CMAKE works so that
      by default it only links to onecoreuap.lib.  This is not required because of the API forwarders.  To
      do this, change C:\Program Files\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake 
      on the line below marked with ****
      
-	  if(_MSVC_C_ARCHITECTURE_FAMILY STREQUAL "ARM" OR _MSVC_CXX_ARCHITECTURE_FAMILY STREQUAL "ARM")
-	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib")
-	  elseif(MSVC_VERSION GREATER 1310)
-	    if(CMAKE_VS_PLATFORM_TOOLSET MATCHES "(v[0-9]+_clang_.*|LLVM-vs[0-9]+.*)")
-	      # Clang/C2 in MSVC14 Update 1 seems to not support -fsantinize (yet?)
-	      # set(_RTC1 "-fsantinize=memory,safe-stack")
-	      set(_FLAGS_CXX " -frtti -fexceptions")
-	    else()
-	      set(_RTC1 "/RTC1")
-	      set(_FLAGS_CXX " /GR /EHsc")
-	    endif()
-	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "onecoreuap.lib") ****
-	  else()
-	    set(_RTC1 "/GZ")
-	    set(_FLAGS_CXX " /GR /GX")
-	    set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib")
-	  endif()	
+      if(_MSVC_C_ARCHITECTURE_FAMILY STREQUAL "ARM" OR _MSVC_CXX_ARCHITECTURE_FAMILY STREQUAL "ARM")
+        set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib")
+      elseif(MSVC_VERSION GREATER 1310)
+        if(CMAKE_VS_PLATFORM_TOOLSET MATCHES "(v[0-9]+_clang_.*|LLVM-vs[0-9]+.*)")
+          # Clang/C2 in MSVC14 Update 1 seems to not support -fsantinize (yet?)
+          # set(_RTC1 "-fsantinize=memory,safe-stack")
+          set(_FLAGS_CXX " -frtti -fexceptions")
+        else()
+          set(_RTC1 "/RTC1")
+          set(_FLAGS_CXX " /GR /EHsc")
+        endif()
+        set(CMAKE_C_STANDARD_LIBRARIES_INIT "onecoreuap.lib") ****
+      else()
+        set(_RTC1 "/GZ")
+        set(_FLAGS_CXX " /GR /GX")
+        set(CMAKE_C_STANDARD_LIBRARIES_INIT "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib")
+      endif()    
      ```
 1. Navigate to the development folder you set up in the first step (we will assume, as ROS2 suggests in their 
 instructions, `c:\dev\ros2`)
