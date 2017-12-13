@@ -22,3 +22,15 @@ bld/
 [Pp]roject[Tt]emplates/
 [Bb]undle[Aa]rtifacts/
 
+GamepadNodeUwp/AppPackages/
+GamepadNodeUwp/Generated Files/
+ecl_core/
+ecl_lite/
+ecl_navigation/
+geometry2/
+kobuki/
+kobuki_core/
+kobuki_msgs/
+sophus/
+teleop_twist_joy/
+turtlebot2_demo/

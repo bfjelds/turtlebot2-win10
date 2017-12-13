@@ -35,19 +35,3 @@ repositories:
     type: git
     url: https://github.com/bfjelds/rplidar_ros.git
     version: win10
-  advanced-win10/pluginlib:
-    type: git
-    url: https://github.com/bfjelds/pluginlib.git
-    version: win10
-  advanced-win10/cmake_module:
-    type: git
-    url: https://github.com/bfjelds/cmake_module.git
-    version: win10
-  advanced-win10/rospack:
-    type: git
-    url: https://github.com/bfjelds/rospack.git
-    version: win10
-  advanced-win10/ros2_console:
-    type: git
-    url: https://github.com/bfjelds/ros2_console.git
-    version: win10
