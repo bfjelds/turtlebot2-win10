@@ -87,13 +87,13 @@ environment variables to point at the respective install directories: SDLDIR and
 1. Run the following commands to get the Turtlebot2 source code:
 
      ```
-     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/turtlebot2_win10.repos -o turtlebot2_win10.repos
+     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/ros2-devel/turtlebot2_win10.repos -o turtlebot2_win10.repos
      vcs import src < turtlebot2_win10.repos
      ```
 1. Run the following commands to get additional advanced source code:
 
      ```
-     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/advanced_win10.repos -o advanced_win10.repos
+     curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/ros2-devel/advanced_win10.repos -o advanced_win10.repos
      vcs import src < advanced_win10.repos
      ```
 1. Ensure that you have a Windows-compatible version of pluginlib:
