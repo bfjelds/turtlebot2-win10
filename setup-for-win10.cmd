@@ -3,7 +3,7 @@
 set TURTLEBOT2_WIN10_PATH=%~dp0
 set ROS_PATH=%TURTLEBOT2_WIN10_PATH%..\ros
 set ROS2_PATH=%TURTLEBOT2_WIN10_PATH%..\ros2
-set ADV_PATH=%TURTLEBOT2_WIN10_PATH%..\advanced-win10
+set ADV_PATH=%TURTLEBOT2_WIN10_PATH%..\ros2-devel
 
 
 echo Modifying the AMENT_IGNORE in projects that Turtlebot2 doesn't need: ARG1="%~1" ARG2="%~2"
@@ -12,7 +12,8 @@ echo   ARG1, specify "reset" to remove AMENT_IGNORE
 echo   ARG2, specify "turtlebot2" to configure only TURTLEBOT2 nodes (kobuki, etc)
 echo   ARG2, specify "advanced" to configure TURTLEBOT2 and ADVANCED nodes (laser_filters, etc)
 
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\eigen3
+call:AddOrRemoveAmentIgnore %~1 %ADV_PATH%\eigen3
+call:AddOrRemoveAmentIgnore %~1 %ADV_PATH%\turtlebot2_demo\depthimage_to_pointcloud2
 
 if "%~2" == "turtlebot2" (
 call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\class_loader
