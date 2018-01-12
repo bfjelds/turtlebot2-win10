@@ -1,37 +1,81 @@
 repositories:
-  advanced-win10/roscpp_core:
+  ros2-devel/geometry2:
+    type: git
+    url: https://github.com/bfjelds/geometry2.git
+    version: ros2-devel
+  ros2-devel/turtlebot2_demo:
+    type: git
+    url: https://github.com/bfjelds/turtlebot2_demo.git
+    version: ros2-devel
+  ros2-devel/kobuki_core:
+    type: git
+    url: https://github.com/bfjelds/kobuki_core.git
+    version: ros2-devel
+  ros2-devel/kobuki_msgs:
+    type: git
+    url: https://github.com/bfjelds/kobuki_msgs.git
+    version: ros2-devel
+  ros2-devel/ecl_tools:
+    type: git
+    url: https://github.com/bfjelds/ecl_tools.git
+    version: ros2-devel
+  ros2-devel/ecl_core:
+    type: git
+    url: https://github.com/bfjelds/ecl_core.git
+    version: ros2-devel
+  ros2-devel/ecl_lite:
+    type: git
+    url: https://github.com/bfjelds/ecl_lite.git
+    version: ros2-devel
+  ros2-devel/ecl_navigation:
+    type: git
+    url: https://github.com/bfjelds/ecl_navigation.git
+    version: ros2-devel
+  ros2-devel/eigen3:
+    type: git
+    url: https://github.com/eigenteam/eigen-git-mirror
+    version: master
+  ros2-devel/sophus:
+    type: git
+    url: https://github.com/bfjelds/Sophus.git
+    version: ros2-devel
+  ros2-devel/teleop_twist_joy:
+    type: git
+    url: https://github.com/bfjelds/teleop_twist_joy
+    version: ros2-devel
+  ros2-devel/roscpp_core:
     type: git
     url: https://github.com/bfjelds/roscpp_core.git
-    version: win10
-  advanced-win10/ros_comm:
+    version: ros2-devel
+  ros2-devel/ros_comm:
     type: git
     url: https://github.com/bfjelds/ros_comm.git
-    version: win10
-  advanced-win10/angles:
+    version: ros2-devel
+  ros2-devel/angles:
     type: git
     url: https://github.com/bfjelds/angles.git
-    version: win10
-  advanced-win10/filters:
+    version: ros2-devel
+  ros2-devel/filters:
     type: git
     url: https://github.com/bfjelds/filters.git
-    version: win10
-  advanced-win10/laser_geometry:
+    version: ros2-devel
+  ros2-devel/laser_geometry:
     type: git
     url: https://github.com/bfjelds/laser_geometry.git
-    version: win10
-  advanced-win10/laser_filters:
+    version: ros2-devel
+  ros2-devel/laser_filters:
     type: git
     url: https://github.com/bfjelds/laser_filters.git
-    version: win10
-  advanced-win10/yaml-cpp:
+    version: ros2-devel
+  ros2-devel/yaml-cpp:
     type: git
     url: https://github.com/bfjelds/yaml-cpp.git
-    version: win10
-  advanced-win10/navigation:
+    version: ros2-devel
+  ros2-devel/navigation:
     type: git
     url: https://github.com/bfjelds/navigation.git
-    version: win10
-  advanced-win10/rplidar_ros:
+    version: ros2-devel
+  ros2-devel/rplidar_ros:
     type: git
     url: https://github.com/bfjelds/rplidar_ros.git
-    version: win10
+    version: ros2-devel

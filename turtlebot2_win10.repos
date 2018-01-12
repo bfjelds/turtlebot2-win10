@@ -1,45 +1,5 @@
 repositories:
-  turtlebot2-win10/geometry2:
-    type: git
-    url: https://github.com/bfjelds/geometry2.git
-    version: win10
-  turtlebot2-win10/turtlebot2_demo:
-    type: git
-    url: https://github.com/bfjelds/turtlebot2_demo.git
-    version: win10
-  turtlebot2-win10/kobuki:
-    type: git
-    url: https://github.com/yujinrobot/kobuki.git
-    version: devel
-  turtlebot2-win10/kobuki_core:
-    type: git
-    url: https://github.com/bfjelds/kobuki_core.git
-    version: win10
-  turtlebot2-win10/kobuki_msgs:
-    type: git
-    url: https://github.com/bfjelds/kobuki_msgs.git
-    version: win10
-  turtlebot2-win10/ecl_core:
-    type: git
-    url: https://github.com/bfjelds/ecl_core.git
-    version: win10
-  turtlebot2-win10/ecl_lite:
-    type: git
-    url: https://github.com/bfjelds/ecl_lite.git
-    version: win10
-  turtlebot2-win10/sophus:
-    type: git
-    url: https://github.com/strasdat/Sophus.git
-    version: master
-  turtlebot2-win10/ecl_navigation:
-    type: git
-    url: https://github.com/stonier/ecl_navigation.git
-    version: devel
-  turtlebot2-win10/teleop_twist_joy:
-    type: git
-    url: https://github.com/bfjelds/teleop_twist_joy
-    version: win10
   turtlebot2-win10:
     type: git
     url: https://github.com/bfjelds/turtlebot2-win10.git
-    version: win10
+    version: ros2-devel

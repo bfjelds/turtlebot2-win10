@@ -2,9 +2,22 @@
 
 set TURTLEBOT2_WIN10_PATH=%~dp0
 set SRC_PATH=%TURTLEBOT2_WIN10_PATH%\..
+set EIGEN3_PATH=%TURTLEBOT2_WIN10_PATH%\eigen3
 set ROOT_PATH=%SRC_PATH%\..
 
+echo .
+echo Build Eigen3
+echo .
+mkdir %EIGEN3_PATH%\build
+mkdir %ROOT_PATH%\install
+pushd %EIGEN3_PATH%\build
+cmake -DCMAKE_INSTALL_PREFIX=%ROOT_PATH%\install ..
+msbuild INSTALL.vcxproj
+popd
+
+
 pushd %ROOT_PATH%
+
 
 echo .
 echo Configure the build to skip AMENT projects that aren't relevant

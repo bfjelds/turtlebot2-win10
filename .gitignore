@@ -24,10 +24,12 @@ bld/
 
 GamepadNodeUwp/AppPackages/
 GamepadNodeUwp/Generated Files/
+ecl_tools/
 ecl_core/
 ecl_lite/
 ecl_navigation/
 geometry2/
+eigen3/
 kobuki/
 kobuki_core/
 kobuki_msgs/

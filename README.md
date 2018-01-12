@@ -33,27 +33,9 @@ disable robot autonomy)
           python src\ament\ament_tools\scripts\ament.py build --cmake-args -DCMAKE_BUILD_TYPE=Debug
      ```
      ```
-     To build pluginlib, a small change is needed to accomodate Visual Studio's version of the std
-     libraries.  You'll need to change src\ros\pluginlib\include\pluginlib\impl\filesystem_helper.hpp 
-     from:
-     
-          #if defined(__has_include)
-     to this:
- 
-          #if defined(_MSC_VER)
-          #include <experimental/filesystem> // C++-standard header file name  
-          #include <filesystem> // Microsoft-specific implementation header file name  
-          namespace pluginlib
-          {
-          namespace impl
-          {
-          namespace fs = std::experimental::filesystem;
-          }  // namespace impl
-          }  // namespace pluginlib
-          
-          #define PLUGINLIB__IMPL__FILESYSYEM_HELPER__HAS_STD_FILESYSTEM
-          
-          #elif defined(__has_include)
+     To build pluginlib for Windows, a small change was made to accomodate Visual Studio's version of the std
+     libraries.  You'll need to make sure you have commit 7a304d5dca328149b130c1bc2bd03d013defb57e in your 
+	 src\ros\pluginlib.  This can be achieved by using the ros2 branch (git checkout ros2).
      ```
      ```
      To use OpenCV and VS2017, I had to modify <OpenCV_DIR>\OpenCVConfig.cmake.  The version in the ROS2 zip was
@@ -95,6 +77,9 @@ disable robot autonomy)
 1. Navigate to the development folder you set up in the first step (we will assume, as ROS2 suggests in their 
 instructions, `c:\dev\ros2`)
 
+     ```
+     pushd C:\dev\ros2
+     ```
 1. To enable map_server, you will need to download [SDL](https://www.libsdl.org/download-1.2.php) and 
 [SDL_Image](https://www.libsdl.org/projects/SDL_image/release-1.2.html). Once this is done, set the following
 environment variables to point at the respective install directories: SDLDIR and SDLIMAGEDIR.
@@ -110,6 +95,13 @@ environment variables to point at the respective install directories: SDLDIR and
      ```
      curl -sk https://raw.githubusercontent.com/bfjelds/turtlebot2-win10/win10/advanced_win10.repos -o advanced_win10.repos
      vcs import src < advanced_win10.repos
+     ```
+1. Ensure that you have a Windows-compatible version of pluginlib:
+
+     ```
+     pushd C:\dev\ros2\src\ros\pluginlib
+     git checkout ros2
+	 popd
      ```
 1. Run the following command to build the Turtlebot2 + advanced binaries from a VS2017 x64 Native Tools Command Prompt (assuming 
 development folder of `c:\dev\ros2`).  To just build the Turtlebot2 binaries, omit "advanced" from the following command:

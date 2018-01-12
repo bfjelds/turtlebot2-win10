@@ -12,13 +12,7 @@ echo   ARG1, specify "reset" to remove AMENT_IGNORE
 echo   ARG2, specify "turtlebot2" to configure only TURTLEBOT2 nodes (kobuki, etc)
 echo   ARG2, specify "advanced" to configure TURTLEBOT2 and ADVANCED nodes (laser_filters, etc)
 
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_lite
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\ecl_navigation
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_core
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\kobuki_msgs
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\sophus
-call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\geometry2\tf2_eigen
+call:AddOrRemoveAmentIgnore %~1 %TURTLEBOT2_WIN10_PATH%\eigen3
 
 if "%~2" == "turtlebot2" (
 call:AddOrRemoveAmentIgnore %~1 %ROS_PATH%\class_loader
