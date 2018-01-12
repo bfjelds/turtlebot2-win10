@@ -5,6 +5,10 @@ set SRC_PATH=%TURTLEBOT2_WIN10_PATH%\..
 set EIGEN3_PATH=%SRC_PATH%\ros2-devel\eigen3
 set ROOT_PATH=%SRC_PATH%\..
 
+
+if EXIST "%ROOT_PATH%\install\share\eigen3\cmake\Eigen3Config.cmake" (
+goto:FilterStep
+)
 echo .
 echo Build Eigen3
 echo .
@@ -15,6 +19,7 @@ cmake -DCMAKE_INSTALL_PREFIX=%ROOT_PATH%\install ..
 msbuild INSTALL.vcxproj
 popd
 
+:FilterStep
 
 pushd %ROOT_PATH%
 
@@ -24,12 +29,12 @@ echo Configure the build to skip AMENT projects that aren't relevant
 echo .
 if "%~1" == "advanced" (
 call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter advanced
-goto:NextStep
+goto:BuildStep
 )
 call %TURTLEBOT2_WIN10_PATH%\setup-for-win10.cmd filter turtlebot2
 
 
-:NextStep
+:BuildStep
 
 echo .
 echo Build ROS2 binaries for Windows 10 Iot Core
